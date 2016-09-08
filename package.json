@@ -2,7 +2,7 @@
   "name": "sounds-ng2",
   "version": "1.0.0",
   "scripts": {
-    "start": "npm install && webpack",
+    "start": "install && webpack",
     "dev.serve": "webpack-dev-server --content-base build",
     "lite": "lite-server",
     "postinstall": "typings install",
