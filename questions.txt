@@ -1,0 +1,56 @@
+menu doesn't work on mobile
+https://developer.quantonemusic.com/rest-api-v3 - link to upgrading from v2 to v3 broken, other link broken
+some requests 500 - for instance "there is a problem with the database": https://data.quantonemusic.com/v3/albums?artistids=1BlBZ9jQGOjmj6Zykgg43L&artistidtype=Spotify&depth=recordings,participations
+labels - not much value. returns very little. can't search except by identifier id or location, can't get music from label such as artists, albums, tracks
+list of genres?
+get artists, artistids param?
+can't get recordings for album in one call? so getting full details for album recordings (e.g. artist) is not possible without numerous requests for each recording.
+
+
+spotify identifiers not returned for artists
+
+albums for multiple artists (artistids comma separated)? bad request? wonder if same as webapi...
+
+
+
+what am I showing?
+
+artist bio & links are useful.
+
+albums? not so sure. 
+
+participations? doesn't work well with recordings. also a bit pants - artwork etc.
+
+so really albums may be useful to find albums under other names not easily found on spotify. as a bonus.
+
+and to get the recording ids to enhance the track info
+
+recordings/63f0b69c-c094-11e5-8274-ac9e17ecfb36?depth=
+
+ArtistDetails - Detail of the main Artists on each recording. 
+•ConstituentRecordings - Recordings that this recording is made up of. 
+•Genres - Genres associated with each recording. 
+•Identifiers - RecordingIdentifiers associated with each artist. 
+•Participations - Participations associated with the recording. 
+•SessionInfo - ProductionEvents associated with the production of each recording. 
+•Works - Works that are being performed on each recording. 
+
+
+{"Result":{"Id":"63f0b69c-c094-11e5-8274-ac9e17ecfb36","Title":"Morning Child","OriginalAlbumTitle":"Play With The Changes","OriginalAlbumId":"6163da6c-358f-e311-be87-ac220b82800d","OriginalReleaseDate":"2007","Duration":276.0,"IsLive":false,"IsConcert":false,"MainArtistsLiteral":"4hero","BeatsPerMinute":89.0,"Artists":[{"Id":"4b3b6dde-318f-e311-be87-ac220b82800d","NameLiteral":"4hero","StageName":"4hero","AppearanceType":"Main","ArtistType":"Act","ImageId":"25cc9ffb-2fa9-4e7e-8905-b57bee39a971"}],"Works":[{"Id":"7ab328dc-977d-cc3b-b9bf-97d4314dd62a","Name":"Morning Child","RecordingSequence":1}],"Genres":[{"Id":"f4d24431-c494-4ed8-b6ac-340235c6f75c","Name":"nu jazz"}],"MusicalKeys":[],"ProductionEvents":[{"IsRecording":true,"IsMixing":true,"Locations":[{"Id":"5ccd267b-a87b-46bc-b67d-5d7f2d83ed92","Name":"Chopp Shopp Studios"},{"Id":"23f28684-9a67-4b02-beb5-71d7cd784e28","Name":"Matter's Music"}]},{"IsMastering":true,"Locations":[{"Id":"14e7ba34-4a4b-4679-a37b-719657917b63","Name":"Optimum Mastering"}]},{"IsRecording":true,"Locations":[{"Id":"ef455ed4-ff65-4aef-a1f4-7794f302d81e","Name":"Yardstick (East) Goodspot"},{"Id":"5ccd267b-a87b-46bc-b67d-5d7f2d83ed92","Name":"Chopp Shopp Studios"},{"Id":"23f28684-9a67-4b02-beb5-71d7cd784e28","Name":"Matter's Music"},{"Id":"f5f86a01-2d42-460e-acdb-4c96ffc6ddb6","Name":"Resident Studios"}]}],"ConstituentRecordings":[]}}
+
+recordings? aka tracks
+addenda
+bpm
+duration
+islive
+artists
+constituent recordings (remix, sampled, etc)
+genres
+musical keys
+production events
+works?
+
+
+
+
+

@@ -1,0 +1,25 @@
+<ul class="layout-constrained">
+<li class="headeritem headeritem-light">
+    <label class="glyphicon glyphicon-search" for="query"></label>
+    <input id="query" [ngModel]="query" (ngModelChange)="searchByTerm($event)" placeholder="Search..."/>
+</li>
+<li class="headeritem headeritem-light">
+    <label class="glyphicon glyphicon-search" for="label"></label>
+    <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event)" placeholder="Record Label..."/>
+</li>
+<li class="headeritem headeritem-reveal" (click)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i>
+</li>
+</ul>
+<div *ngIf="showYears">
+    <!--<span class="slider-button glyphicon glyphicon-chevron-left" (click)="moveSliderRight(sliderItems)"></span>-->
+    <ul class="layout-constrained headeritem-margin">
+        <li class="headeritem headeritem-light headeritem-no-margin headeritem-reveal">
+            <input id="year" [ngModel]="year" (ngModelChange)="searchByYear($event)" placeholder="Year..."/>
+        </li>
+        <li class="headeritem headeritem-reveal" [class.headeritem-selected]="year === selectedYear" *ngFor="let year of years" (click)="searchByYear(year)">{{year}}</li>
+    </ul>
+    <!--<span class="slider-button  glyphicon glyphicon-chevron-right" (click)="moveSliderRight(sliderItems)"></span>-->
+</div>
+<ul class="layout-constrained headeritem-margin" *ngIf="showYears">
+    <li class="headeritem headeritem-reveal" [class.headeritem-selected]="year === selectedYear" *ngFor="let year of yearsRange" (click)="searchByYear(year)">{{year}}</li>
+</ul>

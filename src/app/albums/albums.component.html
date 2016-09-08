@@ -1,0 +1,11 @@
+<div infinite-scroll (scroll)="onScroll()" [@albumState]="state">
+    <tc-album *ngFor="let album of albums | async" 
+            [@albumState]="album.state" [album]="album">
+    </tc-album>
+    <div [@noResultsState]="noResultsState">Your search for <span *ngIf="query.query.trim().length > 0">"{{query.query}}"</span> 
+        <span *ngIf="query.query.trim().length > 0 && query.label.trim().length > 0"> on the label </span> 
+        <span *ngIf="query.label.trim().length > 0">"{{query.label}}"</span>
+         did not return any records. Keep digging the crates.
+    </div>
+    <div *ngIf="recordsHaveEnded()">The record has stopped</div>
+</div>

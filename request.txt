@@ -1,0 +1,38 @@
+GET https://data.quantonemusic.com/v3/albums?title=rumours HTTP/1.1
+Host: data.quantonemusic.com
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11
+Accept: text/html;q=0.9,*/*;q=0.8
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: en-GB,en-US;q=0.8,en;q=0.6
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+AppID: 23b9c85c
+AppKey: 7ef16e211fc639d261f08498a92e222c
+
+spotify:album:7HEmHG1l3bMY5mF5lEKPHr
+
+albums
+
+https://data.quantonemusic.com/v3/albums?title=rumours
+
+{"Results":[{"Id":"156dda6c-358f-e311-be87-ac220b82800d","Title":"Rumours","ArtistsLiteral":"Fleetwood Mac","OriginalReleaseDate":"1977-02-04","Format":"Album","IsLive":false,"IsUnofficial":false,"ImageId":"19ed83ca-ef05-4558-8809-a33fb0f8a901"},{"Id":"6fee1803-54ef-5632-ad55-317a70def34f","Title":"Rumours","ArtistsLiteral":"Awesome","OriginalReleaseDate":"1997","Format":"Single","IsLive":false,"IsUnofficial":false,"ImageId":"33246a3b-ea3a-4439-a536-90d20279c6c2"},{"Id":"e0ba7d4c-d048-bad6-4180-6ae7211372cc","Title":"Rumours","ArtistsLiteral":"Rumours","OriginalReleaseDate":"2014-09-17","Format":"Ep","IsLive":false,"IsUnofficial":true,"ImageId":"53f28e23-9092-40dd-96de-37bac4e08ff8"},{"Id":"478e53b6-964e-1856-1578-0b09781a20af","Title":"Rumours","ArtistsLiteral":"Dougal Reed","OriginalReleaseDate":"2001","IsLive":false,"IsUnofficial":false},{"Id":"3aaf5670-358f-e311-be87-ac220b82800d","Title":"Rumours","ArtistsLiteral":"Hot Chocolate","OriginalReleaseDate":"1973","Format":"Single","IsLive":false,"IsUnofficial":false,"ImageId":"5b843c04-2c22-473e-9573-79b17e598a10"},{"Id":"3f1d3b14-9fac-a02c-725c-3061351e93f3","Title":"Rumours","ArtistsLiteral":"Ambush","OriginalReleaseDate":"1998-09-28","Format":"Album","IsLive":false,"IsUnofficial":false},{"Id":"47fafe6e-358f-e311-be87-ac220b82800d","Title":"Rumours","ArtistsLiteral":"Damage","OriginalReleaseDate":"2000","Format":"Single","IsLive":false,"IsUnofficial":false,"ImageId":"a727a316-47e5-4290-89f0-8d4efabae2fe"}],"Count":7,"TotalCount":7,"PageCount":1,"PageSize":50}
+
+https://data.quantonemusic.com/v3/albums?artistids=1BlBZ9jQGOjmj6Zykgg43L&artistidtype=Spotify&depth=identifiers
+
+artistids=1BlBZ9jQGOjmj6Zykgg43L&artistidtype=Spotify
+
+artists
+
+/artists?id=Id=4b3b6dde-318f-e311-be87-ac220b82800d
+
+{"Results":[{"Id":"4b3b6dde-318f-e311-be87-ac220b82800d","StageName":"4hero","ArtistType":"Act","Biographies":[{"Text":"4Hero are one of the UK's most influential modern dance acts. The duo of Marc Mac and Dego first emerged in the 90s, starting Reinforced Records to issue early breakbeat-led instrumentals such as The Head Hunter, Cooking Up Yah Brain and Journey From The Light that presaged jungle and drum & bass by several years. While their label went from strength to strength, adding Nookie, Doc Scott and Goldie's Rufige Kru to their roster, the duo signed with Talkin' Loud, poking their heads into the light for the first time. The result was double album Two Pages; a fusion-heavy set, labelled 'broken beat' that married their mastery of beat science with jazz, R&B and earned them a Mercury Music Prize for their toils. Rather than push their advantage, the pair concentrated on their various label ventures, productions and side projects, returning intermittently to 4Hero with more considered studio innovations.\r\n"}],"ImageId":"25cc9ffb-2fa9-4e7e-8905-b57bee39a971"}],"Count":1,"TotalCount":1,"PageCount":1,"PageSize":50}
+
+https://data.quantonemusic.com/v3//artists?id=1BlBZ9jQGOjmj6Zykgg43L&idtype=Spotify&depth=biography,relatedartists,dates,genres,groups,identifiers,members,names,urls
+
+{"Results":[{"Id":"4b3b6dde-318f-e311-be87-ac220b82800d","StageName":"4hero","Names":[{"String":"4hero","IsMainName":true}],"ArtistType":"Act","Genres":[{"Id":"67bc757d-85d8-43d6-a447-ea8a9ac3f54d","Name":"electronic dance music"},{"Id":"d8997013-39cd-428d-8ef9-a5144491230e","Name":"drum and bass"},{"Id":"e4054221-4c38-4d62-93fe-71d3c1bde32a","Name":"broken beat"}],"Biographies":[{"Text":"4Hero are one of the UK's most influential modern dance acts. The duo of Marc Mac and Dego first emerged in the 90s, starting Reinforced Records to issue early breakbeat-led instrumentals such as The Head Hunter, Cooking Up Yah Brain and Journey From The Light that presaged jungle and drum & bass by several years. While their label went from strength to strength, adding Nookie, Doc Scott and Goldie's Rufige Kru to their roster, the duo signed with Talkin' Loud, poking their heads into the light for the first time. The result was double album Two Pages; a fusion-heavy set, labelled 'broken beat' that married their mastery of beat science with jazz, R&B and earned them a Mercury Music Prize for their toils. Rather than push their advantage, the pair concentrated on their various label ventures, productions and side projects, returning intermittently to 4Hero with more considered studio innovations.\r\n"}],"WebAddresses":[{"Address":"https://myspace.com/4hero","Website":"MySpace"},{"Address":"http://en.wikipedia.org/wiki/4hero","Website":"Wikipedia"},{"Address":"http://www.4hero.co.uk/","Website":""},{"Address":"https://twitter.com/4hero","Website":"Twitter"},{"Address":"https://rateyourmusic.com/artist/4_hero","Website":"RateYourMusic"}],"Members":[{"Id":"196696df-318f-e311-be87-ac220b82800d","StageName":"Gus Lawrence","ArtistType":"Person","Gender":"Male"},{"Id":"9d8884e0-318f-e311-be87-ac220b82800d","StageName":"Iain Bardouille","ArtistType":"Person","Gender":"Male"},{"Id":"efee7ede-318f-e311-be87-ac220b82800d","StageName":"Crunchy Nut Cornflakes","ArtistType":"Act","ImageId":"b99b5c1a-4931-48b2-b9c0-4d3ad25f3236"},{"Id":"647dc6e0-318f-e311-be87-ac220b82800d","StageName":"Manix","ArtistType":"Person","Gender":"Male","ImageId":"456af0a9-fa6e-40b0-b8df-75920ad79c4e"},{"Id":"663ba9e1-318f-e311-be87-ac220b82800d","StageName":"DJ Stretch","ArtistType":"Person","Gender":"Male","ImageId":"42a584d6-c4ca-4bf7-bf7f-65d8b06b2b10"}],"Groups":[],"RelatedArtists":[{"Id":"1923c3df-318f-e311-be87-ac220b82800d","StageName":"Domu","RelationshipType":"Influenced","ArtistType":"Act","ImageId":"98d1119b-0fce-4da4-8904-e3c255bb815e"},{"Id":"76869bde-318f-e311-be87-ac220b82800d","StageName":"Minnie Riperton","RelationshipType":"InfluencedBy","ArtistType":"Person","Gender":"Female","ImageId":"8329f4e6-4052-46a8-975f-a20b7742f1f9"},{"Id":"bd396dde-318f-e311-be87-ac220b82800d","StageName":"Derrick May","RelationshipType":"InfluencedBy","ArtistType":"Person","Gender":"Male","ImageId":"2f27ff1a-eb93-4224-802a-3e62e71a290f"},{"Id":"4d3f6dde-318f-e311-be87-ac220b82800d","StageName":"Roy Ayers","RelationshipType":"InfluencedBy","ArtistType":"Person","Gender":"Male","ImageId":"7fa95bd1-62e5-48b4-8c9f-a612fb78ed53"}],"Identifiers":[{"IdentifierType":"Spotify","Value":"spotify:artist:1BlBZ9jQGOjmj6Zykgg43L"},{"IdentifierType":"MusicBrainz","Value":"3D05EB8B164441439A61B28E33C4D85F"},{"IdentifierType":"DiscogsArtist","Value":"a1096"}],"ImageId":"25cc9ffb-2fa9-4e7e-8905-b57bee39a971"}],"Count":1,"TotalCount":1,"PageCount":1,"PageSize":50}
+
+
+
+1BlBZ9jQGOjm&idtype=Spotify
+
+/albums?artistIds=1BlBZ9jQGOjm&artistIdType=Spotify

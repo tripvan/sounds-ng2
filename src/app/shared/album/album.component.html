@@ -1,0 +1,22 @@
+<div class="listitem row">
+    <div class="listitem-image"><img [src]="album.image.url" /></div>
+    <span class="circle">{{album.popularity}}</span>
+    <a [href]="album.trustedUri" class="listitem-large">{{album.name}}</a>
+    <span class="listitem-small" *ngFor="let artist of album.artists; let last=last">
+        <a routerLink="/artist/{{artist.id}}">{{artist.name}}</a>
+        <span *ngIf="!last">|</span>
+        <br *ngIf="last" />
+    </span>
+    <span class="listitem-smaller">{{album.release_date}}</span>
+</div>
+<div role="button" class="listitemsmall text-center relative" (click)="showTracks(album)" (mouseover)="showChevron(album)" (mouseout)="showCopyright(album)">
+    <span class="listitem-subdued absolute-left" [hidden]="album.isCopyrightHidden">{{album.copyright?.text}}</span>
+    <i [hidden]="album.isDownChevronHidden" class="glyphicon glyphicon-menu-down"></i>
+    <i [hidden]="album.isUpChevronHidden" class="glyphicon glyphicon-menu-up"></i> 
+</div>
+<template [ngIf]="album.recordings && album.showTracks">
+    <div class="listitemsmall listitemsmall-link" *ngFor="let recording of album.recordings; let i=index">
+        <a>{{(i+ 1) + '. ' + recording?.Name}}</a>
+        {{recording?.Bpm}} <span *ngIf="!!recording?.Bpm">BPM</span> {{recording?.Duration}} <i *ngIf="!!recording?.Duration" class="glyphicon glyphicon-time"></i>
+    </div>
+</template>

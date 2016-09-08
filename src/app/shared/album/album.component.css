@@ -1,0 +1,107 @@
+.listitem {
+    padding: 12px;
+    padding-bottom: 2px;
+    padding-left: 16px;
+    background-color: #3F4747;
+    border-top: solid 1px #2EC7C7;
+    height: 88px;
+}
+
+.listitem-bottomborder {
+    margin-bottom: 20px;
+    border-bottom: solid 1px #2EC7C7;
+}
+    
+.listitem-image {
+    width: 84px;
+    float: left;
+}
+
+.listitem-large {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.listitem-small {
+    font-size: 13px;
+    font-weight: normal;
+    display: inline;
+}
+
+.listitem-subdued {
+    color: #609090;
+}
+
+.listitem-smaller {
+    font-size: 10px;
+    font-weight: normal;
+    display: inline;
+}
+
+.listitemsmall {
+    background-color: #343535;
+    border-bottom: solid 1px #292C2C;
+    font-size: 12px;
+    padding-left: 10px;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 26px;
+}
+
+.listitemsmall:first-child {
+    border-top: solid 1px #292C2C;
+}
+
+.listitemsmall:last-child {
+    margin-bottom: 20px;
+    border-bottom: solid 1px #2EC7C7;
+}
+
+.listitemsmall-link:hover {
+    background-color: #3F4747;
+    cursor: pointer;
+}
+
+.listitem-constrained {
+    background-color: #3F4747;
+    display: inline-block;
+    border-top: solid 1px #2EC7C7;
+    
+    margin: 0 10px 20px 0;
+}
+
+.listitem-constrained-image {
+    display: block;
+}
+
+.listitemsmall-constrained {
+    background-color: #343535;
+    border-bottom: solid 1px #2EC7C7;
+    font-size: 12px;
+    padding: 0 10px;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 26px;
+}
+
+.listitem-constrained-name {
+    font-size: 12px;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute-left {
+    position: absolute;
+    left: 16px;
+}
+
+.hover-hide:hover {
+    display: none;
+}
+
+.hover-show:hover {
+    display: initial;
+}
