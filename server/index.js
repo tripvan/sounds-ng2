@@ -23,7 +23,8 @@ app.use('/*', function(req, res, next){
     //     return next();
     // }
 
-    fs.createReadStream(staticRoot + 'index.html').pipe(res);
+    // fs.createReadStream(staticRoot + 'index.html').pipe(res);
+    res.sendFile(staticRoot + 'index.html');
 
 });
 
