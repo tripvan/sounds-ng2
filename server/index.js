@@ -9,7 +9,7 @@ app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(staticRoot));
 
-app.use('*', function(req, res, next){
+app.use('/*', function(req, res, next){
 
     // if the request is not html then move along
     // var accept = req.accepts('html', 'json', 'xml');
