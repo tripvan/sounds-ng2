@@ -1,7 +1,13 @@
 {
   "name": "sounds-ng2",
   "version": "1.0.0",
+  "description": "Sounds Ng2 - a music search engine powered by spotify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tripvan/sounds-ng2.git"
+  },
   "scripts": {
+    "build:prod": "webpack --config webpack.prod.js",
     "start": "install && webpack",
     "dev.serve": "webpack-dev-server --content-base build",
     "lite": "lite-server",
