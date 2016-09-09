@@ -262,10 +262,16 @@ module.exports = {
     }),
 
     
-    new CopyWebpackPlugin([{
-      from: 'server',
-      to: ''
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: 'server',
+        to: ''
+      },
+      {
+        from: 'web.config',
+        to: ''
+      }
+    ]),
 
 
     /*
