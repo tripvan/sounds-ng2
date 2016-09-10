@@ -14,6 +14,7 @@
     <!--<span class="slider-button glyphicon glyphicon-chevron-left" (click)="moveSliderRight(sliderItems)"></span>-->
     <ul class="layout-constrained headeritem-margin">
         <li class="headeritem headeritem-light headeritem-no-margin headeritem-reveal">
+            <label class="glyphicon glyphicon-search" for="year"></label>
             <input id="year" [ngModel]="year" (ngModelChange)="searchByYear($event)" placeholder="Year..."/>
         </li>
         <li class="headeritem headeritem-reveal" [class.headeritem-selected]="year === selectedYear" *ngFor="let year of years" (click)="searchByYear(year)">{{year}}</li>
