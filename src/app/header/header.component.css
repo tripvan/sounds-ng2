@@ -10,7 +10,6 @@
 .headeritem a {
     padding: 14px;
     display: block;
-    text-decoration: none;
 }
 
 .headeritem a:hover {
@@ -64,6 +63,7 @@ input {
     padding: 0;
     background-color: #3F4747;
     border: none;
+    width: 148px;
 }
 
 input:focus {

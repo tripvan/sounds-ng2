@@ -14,12 +14,15 @@ body {
 
 a {
     color: #35C0E0;
+    text-decoration: none;
 }
 a:hover {
     color: #35C0E0;
+    text-decoration: none;
 }
 a:visited {
     color: #35C0E0;
+    text-decoration: none;
 }
     
 ul {
@@ -69,3 +72,8 @@ ul li {
     margin-left: 12px;
 }
 
+.truncate {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
