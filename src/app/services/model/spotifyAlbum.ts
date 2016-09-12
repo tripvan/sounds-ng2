@@ -14,8 +14,8 @@ export class SpotifyAlbum {
     public copyright: SpotifyCopyright;
     public uri: string;
     public isCopyrightHidden: boolean;
-    public isDownChevronHidden: boolean = true;
-    public isUpChevronHidden: boolean = true;
+    public showDownChevron: boolean = true;
+    public showUpChevron: boolean = false;
 
     constructor (public id: string,
         public name: string,

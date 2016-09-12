@@ -6,13 +6,13 @@
         <span *ngIf="!last">|</span>
         <br *ngIf="last" />
     </span>
-    <span class="listitem-smaller"text>{{album.popularity}}</span>
+    <span class="listitem-smaller popularity">{{album.popularity}}</span>
     <span class="listitem-smaller">{{album.release_date}}</span>
 </div>
-<div role="button" class="listitemsmall text-center relative truncate" (click)="showTracks(album)" (mouseover)="showChevron(album)" (mouseout)="showCopyright(album)">
-    <span class="listitem-subdued absolute-left" [hidden]="album.isCopyrightHidden">{{album.copyright?.text}}</span>
-    <i [hidden]="album.isDownChevronHidden" class="glyphicon glyphicon-menu-down"></i>
-    <i [hidden]="album.isUpChevronHidden" class="glyphicon glyphicon-menu-up"></i> 
+<div role="button" class="listitemsmall truncate" (click)="showTracks(album)">
+    <i *ngIf="album.showDownChevron" class="listitem-subdued glyphicon glyphicon-chevron-down"></i>
+    <i *ngIf="album.showUpChevron" class="listitem-subdued glyphicon glyphicon-chevron-up"></i>
+    <span class="listitem-subdued">{{album.copyright?.text}}</span> 
 </div>
 <template [ngIf]="album.recordings && album.showTracks">
     <div class="listitemsmall listitemsmall-link" *ngFor="let recording of album.recordings; let i=index">

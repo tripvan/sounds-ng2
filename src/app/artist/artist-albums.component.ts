@@ -125,15 +125,9 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
   }
 
   showChevron(album: SpotifyAlbum) {
-      album.isUpChevronHidden = !album.showTracks;
-      album.isDownChevronHidden = album.showTracks;
+      album.showUpChevron = album.showTracks;
+      album.showDownChevron = !album.showTracks;
       album.isCopyrightHidden = true;
-  }
-
-  showCopyright(album: SpotifyAlbum) {
-      album.isUpChevronHidden = true;
-      album.isDownChevronHidden = true;
-      album.isCopyrightHidden = false;
   }
   
   recordsHaveEnded() {
