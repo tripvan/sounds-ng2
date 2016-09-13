@@ -16,13 +16,13 @@ export class AlbumComponent {
     @Input() public album: SpotifyAlbum;
     
   showTracks(album: SpotifyAlbum) {
-      if(!album.showTracks && !album.tracksLoaded) {
-        this.quantoneService.getAlbum(album.id)
-        .subscribe(
-            albumResult => this.spotifyService.updateAlbum(album, albumResult),
-            error => console.log(<any>error)
-        );
-      }
+    //   if(!album.showTracks && !album.tracksLoaded) {
+    //     this.quantoneService.getAlbum(album.id)
+    //     .subscribe(
+    //         albumResult => this.spotifyService.updateAlbum(album, albumResult),
+    //         error => console.log(<any>error)
+    //     );
+    //   }
       album.showTracks = !album.showTracks;
       this.showChevron(album);
   }

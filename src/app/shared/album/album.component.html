@@ -1,22 +1,23 @@
 <div class="listitem row">
     <div class="listitem-image"><img [src]="album.image.url" /></div>
     <a [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
-    <span class="listitem-small truncate" *ngFor="let artist of album.artists; let last=last">
+    <div class="listitem-small truncate" *ngFor="let artist of album.artists; let last=last">
         <a routerLink="/artist/{{artist.id}}">{{artist.name}}</a>
         <span *ngIf="!last">|</span>
         <br *ngIf="last" />
-    </span>
+    </div>
     <span class="listitem-smaller popularity">{{album.popularity}}</span>
     <span class="listitem-smaller">{{album.release_date}}</span>
 </div>
 <div role="button" class="listitemsmall truncate" (click)="showTracks(album)">
-    <i *ngIf="album.showDownChevron" class="listitem-subdued glyphicon glyphicon-chevron-down"></i>
-    <i *ngIf="album.showUpChevron" class="listitem-subdued glyphicon glyphicon-chevron-up"></i>
+    <i *ngIf="album.showDownChevron" class="listitem-subdued tracks-chevron glyphicon glyphicon-chevron-down"></i>
+    <i *ngIf="album.showUpChevron" class="listitem-subdued tracks-chevron glyphicon glyphicon-chevron-up"></i>
     <span class="listitem-subdued">{{album.copyright?.text}}</span> 
 </div>
 <template [ngIf]="album.recordings && album.showTracks">
     <div class="listitemsmall listitemsmall-link" *ngFor="let recording of album.recordings; let i=index">
-        <a>{{(i+ 1) + '. ' + recording?.Name}}</a>
+        <a class="track-link truncate" [href]="recording.trustedUri">{{(i+ 1) + '. ' + recording?.Name}}
         {{recording?.Bpm}} <span *ngIf="!!recording?.Bpm">BPM</span> {{recording?.Duration}} <i *ngIf="!!recording?.Duration" class="glyphicon glyphicon-time"></i>
+        </a>
     </div>
 </template>

@@ -112,3 +112,11 @@
     color: #79DADA;
     margin-right: 3px;
 }
+
+.tracks-chevron {
+    margin: 0 8px 0 3px
+}
+
+.track-link {
+    display: block;
+}

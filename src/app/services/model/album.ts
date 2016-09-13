@@ -6,6 +6,7 @@ import { Track } from "./track";
 export class Album {
     constructor(public SpotifyId: string,
     public Name: string,
+    public Uri: string,
     public ReleaseDate: Date,
     public ImageUrl: string,
     public IsLive: boolean,

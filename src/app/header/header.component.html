@@ -17,10 +17,10 @@
             <label class="glyphicon glyphicon-search" for="year"></label>
             <input id="year" [ngModel]="year" (ngModelChange)="searchByYear($event)" placeholder="Year..."/>
         </li>
-        <li class="headeritem headeritem-reveal" [class.headeritem-selected]="year === selectedYear" *ngFor="let year of years" (click)="searchByYear(year)">{{year}}</li>
+        <li class="headeritem headeritem-reveal" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of years" (click)="searchByYear(yearModel)">{{yearModel}}</li>
     </ul>
     <!--<span class="slider-button  glyphicon glyphicon-chevron-right" (click)="moveSliderRight(sliderItems)"></span>-->
 </div>
 <ul class="layout-constrained headeritem-margin" *ngIf="showYears">
-    <li class="headeritem headeritem-reveal" [class.headeritem-selected]="year === selectedYear" *ngFor="let year of yearsRange" (click)="searchByYear(year)">{{year}}</li>
+    <li class="headeritem headeritem-reveal" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of yearsRange" (click)="searchByYear(yearModel)">{{yearModel}}</li>
 </ul>

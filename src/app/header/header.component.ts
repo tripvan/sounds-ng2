@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
 
   public years: any[];
   public yearsRange: any[];
-  public selectedYear: string = "";
+  public year: string = "";
   public query: string;
   public label: string;
   public debounceTime: number = 800;
@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(params => {
         this.label = this._getParam(params["label"]);
         this.query = this._getParam(params["query"]);
+        this.year = this._getParam(params["year"]);
     })
   }
   private _getParam(param: any) {
@@ -82,7 +83,7 @@ export class HeaderComponent implements OnInit {
   }
   
   public search() {
-    this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.selectedYear, 0));
+    this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
   }
   
   public searchByTerm(term: string) {
@@ -96,8 +97,8 @@ export class HeaderComponent implements OnInit {
   }
   
   public searchByYear(year: string) {
-    if (this.selectedYear === year) year = ""; // deselect when selected
-    this.selectedYear = year;
+    if (this.year === year) year = ""; // deselect when selected
+    this.year = year;
     this.search();
   }
 

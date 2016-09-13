@@ -40,7 +40,7 @@ export class SpotifyService {
                             albums.forEach(album => {
                                 let tracks: Track[] = [];
                                 album.tracks.items.forEach(track => {
-                                    tracks.push(new Track(track.id, track.name, track.uri, "", "", "", "", ""));
+                                    tracks.push(new Track(track.id, track.name, this.getUnsanitisedUrl(track.uri), "", "", "", "", ""));
                                 });
                                 this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.release_date, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
                             });
