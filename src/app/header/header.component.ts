@@ -97,7 +97,7 @@ export class HeaderComponent implements OnInit {
   }
   
   public searchByYear(year: string) {
-    if (this.year === year) year = ""; // deselect when selected
+    if (this.year === year.toString()) year = ""; // deselect when selected. even though string type comes in as number...
     this.year = year;
     this.search();
   }
