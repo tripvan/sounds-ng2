@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, URLSearchParams } from "@angular/http";
-import { DomSanitizationService, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from "rxjs/Observable";
 
 import { Artist } from "./model/artist";
@@ -14,7 +14,7 @@ import { ArtistSearchQuery } from "./model/artistSearchQuery";
 
 @Injectable()
 export class SpotifyService {
-    constructor(private http: Http, private sanitiser: DomSanitizationService) {}
+    constructor(private http: Http, private sanitiser: DomSanitizer) {}
     private spotifyUrl = "https://api.spotify.com/v1/";
     private spotifyAlbums: SpotifyAlbums = new SpotifyAlbums(0, []);
     public perPage: number = 20;

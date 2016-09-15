@@ -1,6 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_PROVIDERS } from "@angular/http";
+import { HttpModule } from "@angular/http";
 
 import { AppComponent }  from './app.component';
 import { routing } from './app.routing';
@@ -12,14 +12,15 @@ import { AlbumsModule } from './albums/albums.module';
 
 @NgModule({
   imports: [ 
-    BrowserModule, 
+    BrowserModule,
+    HttpModule, 
     routing,
     SharedModule.forRoot(),
     HeaderModule, 
     ArtistModule, 
     AlbumsModule],
   declarations: [ AppComponent ],
-  providers: [HTTP_PROVIDERS],
+  // providers: [HTTP_PROVIDERS],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

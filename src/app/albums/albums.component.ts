@@ -58,6 +58,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       this.sub = this
         .router
         .routerState
+        .root
         .queryParams
         .subscribe(params => {
             this.state = 'inactive';

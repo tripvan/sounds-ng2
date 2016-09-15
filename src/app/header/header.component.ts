@@ -59,6 +59,7 @@ export class HeaderComponent implements OnInit {
     this.yearsRange = this.yearsService.getYearsRange();
     this.sub = this.router
       .routerState
+      .root
       .queryParams
       .subscribe(params => {
         this.label = this._getParam(params["label"]);

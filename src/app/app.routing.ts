@@ -1,7 +1,8 @@
-import { RouterModule, RouterConfig } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule  } from '@angular/router';
 
-export const routes: RouterConfig = [
+export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'search' }
 ];
 
-export const routing = RouterModule.forRoot(routes);
+export const routing: ModuleWithProviders = RouterModule.forRoot(routes);

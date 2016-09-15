@@ -1,7 +1,7 @@
 <div class="search-text"><span *ngIf="query.query.trim().length > 0">"{{query.query}}"</span> 
     <span *ngIf="query.query.trim().length > 0 && query.label.trim().length > 0"> on </span> 
     <span *ngIf="query.label.trim().length > 0">"{{query.label}}"</span>
-    <span *ngIf="query.year.trim().length > 0">in {{query.year}}</span>
+    <span *ngIf="query.year.trim().length > 0"> {{query.year}}</span>
 </div>
 <div infinite-scroll (scroll)="onScroll()" [@albumState]="state">
     <tc-album *ngFor="let album of albums | async" 
@@ -10,6 +10,8 @@
     <div [@noResultsState]="noResultsState">Your search for <span *ngIf="query.query.trim().length > 0">"{{query.query}}"</span> 
         <span *ngIf="query.query.trim().length > 0 && query.label.trim().length > 0"> on the label </span> 
         <span *ngIf="query.label.trim().length > 0">"{{query.label}}"</span>
+        <span *ngIf="query.year.trim().length > 0"> {{query.year}}</span>
+        
          did not return any records. Keep digging the crates.
     </div>
     <div *ngIf="recordsHaveEnded()">The record has stopped</div>
