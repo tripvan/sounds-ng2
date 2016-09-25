@@ -5,6 +5,7 @@ import { Component, Input, OnInit, OnDestroy,
   transition,
   animate } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -42,6 +43,7 @@ import { SpotifyService } from '../services/spotify.service';
 export class AlbumsComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
     private route: ActivatedRoute,
+    private titleService: Title,
     private spotifyService: SpotifyService,
     private quantoneService: QuantoneService) {}
     
@@ -104,9 +106,14 @@ export class AlbumsComponent implements OnInit, OnDestroy {
                         let timer = Observable.timer(3000);
                         timer.subscribe(() => this.noResultsState = 'active');
                     }
+                    this.setTitle();
                     return albums;
                 });
         });
+  }
+
+  private setTitle() {
+    this.titleService.setTitle(`${this.query.query.trim().length > 0 ? this.query.query : ""} ${this.query.query.trim().length > 0 && this.query.label.trim().length > 0 ? " on" : ""} ${this.query.label.trim().length > 0 ? this.query.label : ""} ${this.query.year.trim().length > 0 ? this.query.year : ""}`);
   }
 
   onScroll() {

@@ -1,5 +1,5 @@
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpModule } from "@angular/http";
 
 import { AppComponent }  from './app.component';
@@ -20,6 +20,7 @@ import { AlbumsModule } from './albums/albums.module';
     ArtistModule, 
     AlbumsModule],
   declarations: [ AppComponent ],
+  providers: [ Title ],
   // providers: [HTTP_PROVIDERS],
   bootstrap:    [ AppComponent ]
 })

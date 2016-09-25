@@ -5,6 +5,8 @@ import { Component, OnInit, ViewChild,
   transition,
   animate } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
+import { Title } from '@angular/platform-browser';
+
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 
@@ -34,6 +36,7 @@ import { ArtistAlbumsComponent } from './artist-albums.component';
 })
 export class ArtistComponent implements OnInit {
     constructor(private route: ActivatedRoute,
+        private titleService: Title,
         private spotifyService: SpotifyService,
         private quantoneService: QuantoneService) {}
 
@@ -63,6 +66,7 @@ export class ArtistComponent implements OnInit {
                         return self.spotifyService.getArtist(id)
                                 .concatMap(artist => {
                                     self.artist = artist;
+                                    this.titleService.setTitle(artist.Name);
                                     this.imageState = 'active';
                                     return this.quantoneService
                                             .getArtist(artist.Id)
