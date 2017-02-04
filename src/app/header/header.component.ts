@@ -7,6 +7,7 @@ import { Component, OnInit,
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 import { Subject } from "rxjs/Subject";
 
 import { SearchQuery } from "../services/model/searchQuery";
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
   private searchQueryStream = new Subject<SearchQuery>();
   private showYears: boolean = false;
   private showLabels: boolean = false;
-  private sub: any;
+  private queryParamsSubscription: Subscription;
 
   public years: any[];
   public yearsRange: any[];
@@ -57,13 +58,28 @@ export class HeaderComponent implements OnInit {
     .distinctUntilChanged();
 
   ngOnInit() {
+    this._subscribeToSearchQuery();
+    this._initSearchLists();
+    this._subscribeToQueryParams();
+  }
+
+  private _subscribeToSearchQuery() {
     this.searchQuery.subscribe(query => {
       this._navigateToAlbums(query);
     });
+  }
+
+  private _navigateToAlbums(search: SearchQuery) {
+      this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year } });
+  }
+  
+  private _initSearchLists() {
     this.years = this.yearsService.getYears();
     this.yearsRange = this.yearsService.getYearsRange();
     this.labels = this.labelService.getLabels();
-    this.sub = this.router
+  }
+  private _subscribeToQueryParams() {
+    this.queryParamsSubscription = this.router
       .routerState
       .root
       .queryParams
@@ -71,8 +87,9 @@ export class HeaderComponent implements OnInit {
         this.label = this._getParam(params["label"]);
         this.query = this._getParam(params["query"]);
         this.year = this._getParam(params["year"]);
-    })
+    });
   }
+
   private _getParam(param: any) {
     if(param === undefined){
       return '';
@@ -85,10 +102,7 @@ export class HeaderComponent implements OnInit {
     
     return '';
   }
-  private _navigateToAlbums(search: SearchQuery) {
-      this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year } });
-  }
-  
+
   public search() {
     this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
   }
@@ -118,18 +132,5 @@ export class HeaderComponent implements OnInit {
   public toggleLabels() {
     this.showLabels = !this.showLabels;
     this.showYears = false;
-  }
-
-  public moveSliderLeft(sliderItems) {
-    this.moveSlider(true, sliderItems);
-  }
-
-  public moveSliderRight(sliderItems) {
-    this.moveSlider(false, sliderItems);
-  }
-
-  private moveSlider(left: boolean, sliderItems) {
-    console.log(left);
-    console.log(sliderItems);
   }
 }
