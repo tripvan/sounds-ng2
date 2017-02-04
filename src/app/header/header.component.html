@@ -8,6 +8,7 @@
     <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event)" placeholder="Record Label..."/>
 </li>
 <li class="headeritem headeritem-reveal" (click)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i>
+<li class="headeritem headeritem-reveal" (click)="toggleLabels()">Labels<i class="glyphicon glyphicon-chevron-down" *ngIf="!showLabels"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showLabels"></i>
 </li>
 </ul>
 <div *ngIf="showYears">
@@ -23,4 +24,8 @@
 </div>
 <ul class="layout-constrained headeritem-margin" *ngIf="showYears">
     <li class="headeritem headeritem-reveal" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of yearsRange" (click)="searchByYear(yearModel)">{{yearModel}}</li>
+</ul>
+
+<ul class="layout-constrained headeritem-margin" *ngIf="showLabels">
+    <li class="headeritem headeritem-reveal" [class.headeritem-selected]="labelModel.Name.toString() === label" *ngFor="let labelModel of labels" (click)="searchByLabel(labelModel.Name)">{{labelModel.Name}}</li>
 </ul>

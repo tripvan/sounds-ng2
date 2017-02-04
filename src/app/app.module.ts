@@ -9,6 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
 import { ArtistModule } from './artist/artist.module';
 import { AlbumsModule } from './albums/albums.module';
+import { LabelsModule } from './labels/labels.module';
 
 @NgModule({
   imports: [ 
@@ -18,7 +19,9 @@ import { AlbumsModule } from './albums/albums.module';
     SharedModule.forRoot(),
     HeaderModule, 
     ArtistModule, 
-    AlbumsModule],
+    AlbumsModule,
+    LabelsModule
+    ],
   declarations: [ AppComponent ],
   providers: [ Title ],
   // providers: [HTTP_PROVIDERS],

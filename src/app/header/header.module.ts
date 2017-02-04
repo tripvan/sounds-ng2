@@ -4,11 +4,12 @@ import { SharedModule } from '../shared/shared.module';
 
 import { HeaderComponent } from './header.component';
 import { YearsService } from '../services/years.service';
+import { LabelService } from '../services/label.service';
 @NgModule({
     imports: [SharedModule, FormsModule],
     declarations: [HeaderComponent],
     exports: [HeaderComponent],
-    providers: [YearsService]
+    providers: [YearsService, LabelService]
 })
 export class HeaderModule {
 

@@ -11,6 +11,8 @@ import { Subject } from "rxjs/Subject";
 
 import { SearchQuery } from "../services/model/searchQuery";
 import { YearsService } from "../services/years.service";
+import { LabelService } from '../services/label.service';
+import { Label } from '../services/model/label';
 
 @Component({
     selector: 'tc-header',
@@ -32,17 +34,20 @@ import { YearsService } from "../services/years.service";
 export class HeaderComponent implements OnInit {
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
-    private yearsService: YearsService) {}
+    private yearsService: YearsService,
+    private labelService: LabelService) {}
 
   private errorMessage: string;
   private searchQueryStream = new Subject<SearchQuery>();
   private showYears: boolean = false;
+  private showLabels: boolean = false;
   private sub: any;
 
   public years: any[];
   public yearsRange: any[];
   public year: string = "";
   public query: string;
+  public labels: Label[];
   public label: string;
   public debounceTime: number = 800;
   public sliderItemsState: string = '';
@@ -57,6 +62,7 @@ export class HeaderComponent implements OnInit {
     });
     this.years = this.yearsService.getYears();
     this.yearsRange = this.yearsService.getYearsRange();
+    this.labels = this.labelService.getLabels();
     this.sub = this.router
       .routerState
       .root
@@ -93,6 +99,7 @@ export class HeaderComponent implements OnInit {
   }
   
   public searchByLabel(label: string) {
+    if (this.label === label.toString()) label = ""; // deselect when selected. even though string type comes in as number...
     this.label = label;
     this.search();
   }
@@ -105,6 +112,12 @@ export class HeaderComponent implements OnInit {
 
   public toggleYears() {
     this.showYears = !this.showYears;
+    this.showLabels = false;
+  }
+
+  public toggleLabels() {
+    this.showLabels = !this.showLabels;
+    this.showYears = false;
   }
 
   public moveSliderLeft(sliderItems) {
