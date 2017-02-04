@@ -62,7 +62,7 @@ export class ArtistComponent implements OnInit {
                 if (!!self.searchQueryStream === false) {
                     self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
                     self.searchQueryStream
-                    .concatMap((id: string) => {
+                    .concatMap<Artist>((id: string) => {
                         return self.spotifyService.getArtist(id)
                                 .concatMap(artist => {
                                     self.artist = artist;

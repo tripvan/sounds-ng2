@@ -15,22 +15,22 @@ export class QuantoneService {
     private baseUrl: string = 'http://sounds-api.azurewebsites.net/api/';
     getArtist(artistId): Observable<Artist[]>  {
         return this.http.get(this.baseUrl +  'artist/' + artistId)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+                    .map<Artist[]>(this.extractData)
+                    .catch<Artist[]>(this.handleError);
     }
     getArtists(artistIds: Array<string>): Observable<Artist[]>  {
         return Observable.from(artistIds)
             .map(artistId => {
             return this.http.get(this.baseUrl + 'artist/' + artistId)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+                    .map<Artist[]>(this.extractData)
+                    .catch<Artist[]>(this.handleError);
         }).concatAll();
     }
 
     getAlbum(id: string): Observable<Album[]>  {
         return this.http.get(this.baseUrl + 'albumbyid/' + id)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+                    .map<Album[]>(this.extractData)
+                    .catch<Album[]>(this.handleError);
     }
 
     private extractData(response: Response) {

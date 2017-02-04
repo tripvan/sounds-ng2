@@ -94,7 +94,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.searchQueryStream = new BehaviorSubject<SearchQuery>(this.query);
     this.albums = this.searchQueryStream
         .filter(search => !!search && (search.query.length > 2 || search.label.length > 2))
-        .concatMap((query: SearchQuery) => {
+        .concatMap<SpotifyAlbum[]>((query: SearchQuery) => {
             if (this.query.scrolling === false) {
                 this.state = 'inactive';
             }

@@ -184,8 +184,8 @@ module.exports = {
 
         {
             test: /\.less$/,
-            loader: 'style!css!less',
-            include: path.resolve(__dirname, "node_modules/bootstrap/less")
+            loader: 'style-loader!css-loader!less-loader'
+            // include: path.resolve(__dirname, "node_modules/bootstrap/less")
             // Or
             // loaders: ['style', 'css', 'sass'],
         },

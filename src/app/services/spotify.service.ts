@@ -71,15 +71,15 @@ export class SpotifyService {
         let fullQuery: string = "?q=" + query.query + label + year + "&type=album&offset=" + query.offset + "&limit=" + this.perPage + "&market=GB";
 
         return this.http.get(this.spotifyUrl + "search" + fullQuery)
-            .map(this.extractAlbumIdData)
-            .catch(this.handleError);
+            .map<SpotifyAlbums | any>(this.extractAlbumIdData)
+            .catch<SpotifyAlbums>(this.handleError);
     }
     getArtistAlbumIds(query: ArtistSearchQuery): Observable<SpotifyAlbums> {
         return this.http.get(this.spotifyUrl + "artists/" + query.id + '/albums?album_type=album,single&limit=' + this.perPage + '&offset=' + query.offset + '&market=GB')
-            .map(this.extractArtistAlbumIdData)
-            .catch(this.handleError);
+            .map<SpotifyAlbums>(this.extractArtistAlbumIdData)
+            .catch<SpotifyAlbums>(this.handleError);
     }
-    private extractArtistAlbumIdData(response: Response) {
+    private extractArtistAlbumIdData(response: Response): SpotifyAlbum | any {
         let body = response.json();
         return new SpotifyAlbums(body.total, body.items) || {};
     }
@@ -89,7 +89,7 @@ export class SpotifyService {
         return Observable.throw(errMsg);
     }
 
-    private extractAlbumIdData(response: Response) {
+    private extractAlbumIdData(response: Response): SpotifyAlbums | {} {
         let body = response.json();
         return new SpotifyAlbums(body.albums.total, body.albums.items) || {};
     }
@@ -99,8 +99,8 @@ export class SpotifyService {
         params.set("ids", albumIds.join(","));
 
         return this.http.get(this.spotifyUrl + "albums", { search: params })
-            .map(this.extractAlbumData)
-            .catch(this.handleError);
+            .map<SpotifyAlbum[]>(this.extractAlbumData)
+            .catch<SpotifyAlbum[]>(this.handleError);
     }
 
     private extractAlbumData(response: Response) {
@@ -165,11 +165,11 @@ export class SpotifyService {
 
     getArtist(id: string): Observable<Artist> {
         return this.http.get(this.spotifyUrl + "artists/" + id)
-            .map(this.extractArtistData)
-            .catch(this.handleError);
+            .map<Artist | any>(this.extractArtistData)
+            .catch<Artist>(this.handleError);
     }
 
-    private extractArtistData(response: Response) {
+    private extractArtistData(response: Response): Artist | any {
         let artist = response.json();
         if(!!artist) {
             let newArtist = new Artist(artist.id, artist.name, '', artist.images);
