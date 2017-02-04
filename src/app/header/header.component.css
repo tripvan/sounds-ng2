@@ -19,7 +19,7 @@
 .headeritem-reveal {
     margin: 2px 0;
     margin-right: 4px;
-    padding: 14px 0;
+    padding: 14px 5px;
     color: #35C0E0;
 }
 
@@ -49,10 +49,14 @@
 
 .glyphicon {
     color: #79DADA;
+}
+
+.glyphicon-search {
     padding-right: 10px;
 }
 
 .headeritem-light {
+    margin: 2px 0;
     padding: 14px;
     background-color: #3F4747;
     font-weight: normal;

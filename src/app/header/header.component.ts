@@ -7,7 +7,6 @@ import { Component, OnInit,
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/debounceTime';
 import { Subscription } from "rxjs/Subscription";
 import { Subject } from "rxjs/Subject";
 
