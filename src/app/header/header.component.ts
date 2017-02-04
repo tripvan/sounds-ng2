@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit {
     private labelService: LabelService) {}
 
   private errorMessage: string;
+  private searchTermQueryStream = new Subject<SearchQuery>();
   private searchQueryStream = new Subject<SearchQuery>();
   private showYears: boolean = false;
   private showLabels: boolean = false;
@@ -53,22 +54,28 @@ export class HeaderComponent implements OnInit {
   public debounceTime: number = 800;
   public sliderItemsState: string = '';
   
-  searchQuery: Observable<SearchQuery> = this.searchQueryStream
+  searchTermQuery: Observable<SearchQuery> = this.searchTermQueryStream
     .debounceTime(this.debounceTime)
     .distinctUntilChanged();
+  searchQuery: Observable<SearchQuery> = this.searchQueryStream
 
   ngOnInit() {
-    this._subscribeToSearchQuery();
+    this._subscribeToSearchQueries();
     this._initSearchLists();
     this._subscribeToQueryParams();
   }
 
-  private _subscribeToSearchQuery() {
-    this.searchQuery.subscribe(query => {
+  private _subscribeToSearchQueries() {
+    this._subscribeToSearchQuery(this.searchTermQuery);
+    this._subscribeToSearchQuery(this.searchQuery);
+  }
+
+  private _subscribeToSearchQuery(searchQuery: Observable<SearchQuery>) {
+    searchQuery.subscribe(query => {
       this._navigateToAlbums(query);
     });
   }
-
+  
   private _navigateToAlbums(search: SearchQuery) {
       this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year } });
   }
@@ -103,13 +110,17 @@ export class HeaderComponent implements OnInit {
     return '';
   }
 
-  public search() {
-    this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
+  public search(byTerm: boolean = false) {
+    if (byTerm) {
+      this.searchTermQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
+    } else {
+      this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
+    }
   }
   
   public searchByTerm(term: string) {
     this.query = term;
-    this.search();
+    this.search(true);
   }
   
   public searchByLabel(label: string) {
