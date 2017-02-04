@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build:prod": "webpack --config webpack.prod.js",
-    "start": "install && webpack",
+    "start": "install && dev.serve",
     "dev.serve": "webpack-dev-server --content-base build",
     "lite": "lite-server",
     "postinstall": "typings install",
