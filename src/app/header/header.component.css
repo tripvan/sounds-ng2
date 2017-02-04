@@ -21,6 +21,7 @@
     margin-right: 4px;
     padding: 14px 5px;
     color: #35C0E0;
+    max-width: 100px;
 }
 
 .headeritem-reveal i {
@@ -60,6 +61,7 @@
     padding: 14px;
     background-color: #3F4747;
     font-weight: normal;
+    max-width: inherit;
 }
 
 input {
