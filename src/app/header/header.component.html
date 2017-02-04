@@ -9,38 +9,8 @@
 </li>
 <div><li class="headeritem headeritem-reveal" [class.headeritem-selected]="showYears" (click)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i>
 <li class="headeritem headeritem-reveal" [class.headeritem-selected]="showLabels" (click)="toggleLabels()">Labels<i class="glyphicon glyphicon-chevron-down" *ngIf="!showLabels"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showLabels"></i>
-</li><i class='glyphicon glyphicon-repeat slow-right-spinner'></i></div>
+</li></div>
 </ul>
-<style>
-    .glyphicon.slow-right-spinner {
-    -webkit-animation: glyphicon-spin-r 3s infinite linear;
-    animation: glyphicon-spin-r 3s infinite linear;
-}
-
-@-webkit-keyframes glyphicon-spin-r {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-
-@keyframes glyphicon-spin-r {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-</style>
 <div *ngIf="showYears">
     <!--<span class="slider-button glyphicon glyphicon-chevron-left" (click)="moveSliderRight(sliderItems)"></span>-->
     <ul class="layout-constrained headeritem-margin">
