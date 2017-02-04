@@ -7,6 +7,7 @@ import { Component, OnInit,
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/debounceTime';
 import { Subscription } from "rxjs/Subscription";
 import { Subject } from "rxjs/Subject";
 
@@ -124,14 +125,16 @@ export class HeaderComponent implements OnInit {
   }
   
   public searchByLabel(label: string) {
-    if (this.label === label.toString()) label = ""; // deselect when selected. even though string type comes in as number...
-    this.label = label;
-    this.search();
+    this._searchBy('label', label);
   }
   
   public searchByYear(year: string) {
-    if (this.year === year.toString()) year = ""; // deselect when selected. even though string type comes in as number...
-    this.year = year;
+    this._searchBy('year', year);
+  }
+
+  private _searchBy(propName: string, value: string) {
+    if (this[propName] === value.toString()) value = ""; // deselect when selected. even though string type comes in as number...
+    this[propName] = value;
     this.search();
   }
 
