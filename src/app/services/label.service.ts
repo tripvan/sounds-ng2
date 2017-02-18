@@ -19,6 +19,7 @@ export class LabelService {
             new Label('Young Turks'), 
             new Label('Compost'), 
             new Label('4ad'), 
+            new Label('Mooncircle'), 
         ];
 
         return labels;
