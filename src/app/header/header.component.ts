@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
     private labelService: LabelService) {}
 
   private errorMessage: string;
-  private searchTermQueryStream = new Subject<SearchQuery>();
+  private freeTextSearchQueryStream = new Subject<SearchQuery>();
   private searchQueryStream = new Subject<SearchQuery>();
   private showYears: boolean = false;
   private showLabels: boolean = false;
@@ -53,11 +53,11 @@ export class HeaderComponent implements OnInit {
   public label: string;
   public debounceTime: number = 800;
   public sliderItemsState: string = '';
-  
-  searchTermQuery: Observable<SearchQuery> = this.searchTermQueryStream
+
+  freeTextSearchQuery: Observable<SearchQuery> = this.freeTextSearchQueryStream
     .debounceTime(this.debounceTime)
     .distinctUntilChanged();
-  searchQuery: Observable<SearchQuery> = this.searchQueryStream
+  searchQuery: Observable<SearchQuery> = this.searchQueryStream;
 
   ngOnInit() {
     this._subscribeToSearchQueries();
@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private _subscribeToSearchQueries() {
-    this._subscribeToSearchQuery(this.searchTermQuery);
+    this._subscribeToSearchQuery(this.freeTextSearchQuery);
     this._subscribeToSearchQuery(this.searchQuery);
   }
 
@@ -75,11 +75,11 @@ export class HeaderComponent implements OnInit {
       this._navigateToAlbums(query);
     });
   }
-  
+
   private _navigateToAlbums(search: SearchQuery) {
       this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year } });
   }
-  
+
   private _initSearchLists() {
     this.years = this.yearsService.getYears();
     this.yearsRange = this.yearsService.getYearsRange();
@@ -103,38 +103,38 @@ export class HeaderComponent implements OnInit {
     }
 
     let result: string = param;
-    if(result != "true") {
+    if (result !== "true") {
       return decodeURI(result);
     }
-    
+
     return '';
   }
 
-  public search(byTerm: boolean = false) {
-    if (byTerm) {
-      this.searchTermQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
+  public search(isFreeTextSearch: boolean = false) {
+    if (isFreeTextSearch) {
+      this.freeTextSearchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
     } else {
       this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
     }
   }
-  
+
   public searchByTerm(term: string) {
     this.query = term;
     this.search(true);
   }
-  
-  public searchByLabel(label: string) {
-    this._searchBy('label', label);
-  }
-  
-  public searchByYear(year: string) {
-    this._searchBy('year', year);
+
+  public searchByLabel(label: string, isFreeTextSearch: boolean) {
+    this._searchBy('label', label, isFreeTextSearch);
   }
 
-  private _searchBy(propName: string, value: string) {
+  public searchByYear(year: string, isFreeTextSearch: boolean) {
+    this._searchBy('year', year, isFreeTextSearch);
+  }
+
+  private _searchBy(propName: string, value: string, isFreeTextSearch: boolean) {
     if (this[propName] === value.toString()) value = ""; // deselect when selected. even though string type comes in as number...
     this[propName] = value;
-    this.search();
+    this.search(isFreeTextSearch);
   }
 
   public toggleYears() {
