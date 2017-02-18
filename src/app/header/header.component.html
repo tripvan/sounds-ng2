@@ -10,7 +10,7 @@
 </ul>
 <div *ngIf="showYears">
     <ul class="layout-constrained headeritem-margin">
-        <li class="headeritem headeritem-light headeritem-no-margin headeritem-reveal">
+        <li class="headeritem headeritem-light headeritem-no-margin">
             <label class="glyphicon glyphicon-search" for="year"></label>
             <input id="year" [ngModel]="year" (ngModelChange)="searchByYear($event, true)" placeholder="Year..."/>
         </li>
@@ -22,7 +22,7 @@
 </ul>
 
 <ul class="layout-constrained headeritem-margin" *ngIf="showLabels">
-    <li class="headeritem headeritem-light headeritem-no-margin headeritem-reveal">
+    <li class="headeritem headeritem-light headeritem-no-margin">
         <label class="glyphicon glyphicon-search" for="label"></label>
         <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event, true)" placeholder="Record Label..."/>
     </li>

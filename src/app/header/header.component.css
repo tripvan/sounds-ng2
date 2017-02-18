@@ -37,8 +37,8 @@
     color: #35C0E0;
     cursor: pointer;
 }
-.headeritem-selected {
-    background-color:#1698b5;
+.headeritem-selected, .headeritem-selected.headeritem-reveal:hover {
+    background-color:#0195b7;
     color: #3F4747;
 }
 
