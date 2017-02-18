@@ -16,6 +16,10 @@
     background-color: #3F4747;
 }
 
+.headeritem-reveal-container {
+    display: inline-flex;
+}
+
 .headeritem-reveal {
     margin: 2px 0;
     margin-right: 4px;

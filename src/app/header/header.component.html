@@ -1,15 +1,16 @@
 <ul class="layout-constrained">
-<li class="headeritem headeritem-light">
-    <label class="glyphicon glyphicon-search" for="query"></label>
-    <input id="query" [ngModel]="query" (ngModelChange)="searchByTerm($event)" placeholder="Search..."/>
-</li>
-<li class="headeritem headeritem-light">
-    <label class="glyphicon glyphicon-search" for="label"></label>
-    <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event)" placeholder="Record Label..."/>
-</li>
-<div><li class="headeritem headeritem-reveal" [class.headeritem-selected]="showYears" (click)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i>
-<li class="headeritem headeritem-reveal" [class.headeritem-selected]="showLabels" (click)="toggleLabels()">Labels<i class="glyphicon glyphicon-chevron-down" *ngIf="!showLabels"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showLabels"></i>
-</li></div>
+    <li class="headeritem headeritem-light">
+        <label class="glyphicon glyphicon-search" for="query"></label>
+        <input id="query" [ngModel]="query" (ngModelChange)="searchByTerm($event)" placeholder="Search..."/>
+    </li>
+    <li class="headeritem headeritem-light">
+        <label class="glyphicon glyphicon-search" for="label"></label>
+        <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event)" placeholder="Record Label..."/>
+    </li>
+    <div class="headeritem-reveal-container">
+        <li class="headeritem headeritem-reveal" [class.headeritem-selected]="showYears" (click)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i></li>
+        <li class="headeritem headeritem-reveal" [class.headeritem-selected]="showLabels" (click)="toggleLabels()">Labels<i class="glyphicon glyphicon-chevron-down" *ngIf="!showLabels"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showLabels"></i></li>
+    </div>
 </ul>
 <div *ngIf="showYears">
     <!--<span class="slider-button glyphicon glyphicon-chevron-left" (click)="moveSliderRight(sliderItems)"></span>-->
