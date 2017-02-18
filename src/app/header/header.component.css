@@ -34,10 +34,12 @@
 
 .headeritem-reveal:hover {
     background-color: #3F4747;
+    color: #35C0E0;
     cursor: pointer;
 }
 .headeritem-selected {
-    background-color:#3F4747;
+    background-color:#1698b5;
+    color: #3F4747;
 }
 
 .headeritem-margin li.headeritem-no-margin {
