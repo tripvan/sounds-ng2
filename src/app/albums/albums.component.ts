@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy,
+import { Component, Input, OnInit, OnDestroy,
   trigger,
   state,
   style,
@@ -16,8 +16,8 @@ import { QuantoneService } from '../services/quantone.service';
 import { SpotifyService } from '../services/spotify.service';
 
 @Component({
-    // changeDetection: ChangeDetectionStrategy.OnPush,
   template: require('./albums.component.html'),
+  styles: [require('./albums.component.css')],
   animations: [
       trigger('albumState', [
       state('inactive', style({
@@ -47,7 +47,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private spotifyService: SpotifyService,
     private quantoneService: QuantoneService) {}
-    
+
     private sub: any;
     private errorMessage;
     private query: SearchQuery;
@@ -56,6 +56,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     public albums: Observable<SpotifyAlbum[]>;
     public state: string = 'inactive';
     public noResultsState: string = 'inactive';
+    public isLoading: boolean = false;
 
   ngOnInit() {
       this.sub = this
@@ -67,7 +68,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
             this.state = 'inactive';
             this.noResultsState = 'inactive';
             this.query = this._getSearchQueryFromParams(params);
-            if(!this.query.isValid()) {
+            if (!this.query.isValid()) {
                 return;
             }
             if (this._noSearchQueryStream()) {
@@ -99,11 +100,14 @@ export class AlbumsComponent implements OnInit, OnDestroy {
             if (this.query.scrolling === false) {
                 this.state = 'inactive';
             }
+            this.isLoading = true;
+
             return this.spotifyService.getAlbums(query)
                 .map((albums: SpotifyAlbum[]) => {
                     this.state = 'active';
+                    this.isLoading = false;
                     this.query.scrolling = false;
-                    if(albums.length === 0) {
+                    if (albums.length === 0) {
                         let timer = Observable.timer(3000);
                         timer.subscribe(() => this.noResultsState = 'active');
                     }

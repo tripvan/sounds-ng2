@@ -100,12 +100,12 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
       }
   }
   onScroll() {
-    this.query.scrolling = true;
     this.query.offset += this.spotifyService.perPage;
     if (this.query.offset >= this.spotifyService.getTotal()) {
         console.log("no more results");
         return;
     }
+    this.query.scrolling = true;
     this.searchQueryStream.next(this.query);
   }
 

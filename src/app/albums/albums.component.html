@@ -3,10 +3,12 @@
     <span *ngIf="query.label.trim().length > 0">"{{query.label}}"</span>
     <span *ngIf="query.year.trim().length > 0"> {{query.year}}</span>
 </div>
+<tc-loader [isHidden]="!isLoading"></tc-loader>
 <div infinite-scroll (scroll)="onScroll()" [@albumState]="state">
     <tc-album *ngFor="let album of albums | async" 
             [@albumState]="album.state" [album]="album">
     </tc-album>
+    
     <div [@noResultsState]="noResultsState">Your search for <span *ngIf="query.query.trim().length > 0">"{{query.query}}"</span> 
         <span *ngIf="query.query.trim().length > 0 && query.label.trim().length > 0"> on the label </span> 
         <span *ngIf="query.label.trim().length > 0">"{{query.label}}"</span>
@@ -16,3 +18,4 @@
     </div>
     <div *ngIf="recordsHaveEnded()">The record has stopped</div>
 </div>
+<tc-loader [isHidden]="!query.scrolling"></tc-loader>

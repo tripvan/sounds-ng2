@@ -4,3 +4,4 @@
     </tc-album>
     <div *ngIf="recordsHaveEnded()">The record has stopped</div>
 </div>
+<tc-loader [isHidden]="!query.scrolling"></tc-loader>
