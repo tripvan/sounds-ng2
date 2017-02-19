@@ -4,7 +4,7 @@
     padding-left: 16px;
     background-color: #3F4747;
     border-top: solid 1px #2EC7C7;
-    height: 88px;
+    min-height: 88px;
 }
 
 .listitem-bottomborder {
@@ -26,7 +26,6 @@
 .listitem-small {
     font-size: 13px;
     font-weight: normal;
-    display: inline;
 }
 
 .listitem-subdued {
