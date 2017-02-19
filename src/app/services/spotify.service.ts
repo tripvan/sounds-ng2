@@ -143,9 +143,6 @@ export class SpotifyService {
             })
             .concatAll();
     }
-    // private _neverGonnaGiveYouUp() {
-    //     return new SpotifyAlbums(0, [new SpotifyAlbum("6Cgd6xYLzcC6wdtuuMlyiS", null, [], [], null, [], [], null, null)]);
-    // }
     updateAlbum(spotifyAlbum: SpotifyAlbum, albumResult: Album[]){
         spotifyAlbum.tracksLoaded = true;
         if (albumResult && albumResult.length > 0) {
