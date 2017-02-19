@@ -8,6 +8,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { SearchQuery } from '../services/model/searchQuery';
@@ -52,6 +53,8 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     private errorMessage;
     private query: SearchQuery;
     private searchQueryStream: BehaviorSubject<SearchQuery>;
+    private noResultsTimer = Observable.timer(3000);
+    private noResultsSubscription: Subscription;
 
     public albums: Observable<SpotifyAlbum[]>;
     public state: string = 'inactive';
@@ -66,7 +69,9 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {
             this.state = 'inactive';
+            console.log('noresulstate = inactive');
             this.noResultsState = 'inactive';
+            this.noResultsSubscription && this.noResultsSubscription.unsubscribe();
             this.query = this._getSearchQueryFromParams(params);
             if (!this.query.isValid()) {
                 return;
@@ -108,8 +113,10 @@ export class AlbumsComponent implements OnInit, OnDestroy {
                     this.isLoading = false;
                     this.query.scrolling = false;
                     if (albums.length === 0) {
-                        let timer = Observable.timer(3000);
-                        timer.subscribe(() => this.noResultsState = 'active');
+                        this.noResultsSubscription = this.noResultsTimer.subscribe(() => {
+                          console.log('noresulstate = active');
+                          this.noResultsState = 'active'
+                        });
                     }
                     this.setTitle();
                     return albums;
