@@ -17,84 +17,106 @@ import { Artist } from '../services/model/artist';
 import { ArtistAlbumsComponent } from './artist-albums.component';
 
 @Component({
-    template: require('./artist.component.html'),
-    styles: [require('./artist.component.css')],
-    animations: [
-        trigger('artistState', [
-            state('inactive', style({
-                opacity: 0
-            })),
-            state('active',   style({
-                opacity: 1
-            })),
-            transition('inactive => active', [
-                style({ height: 0}),
-                animate('100ms ease-out', style({ height: '*'}))
-            ])
-        ])
-    ]
+  template: require('./artist.component.html'),
+  styles: [require('./artist.component.css')],
+  animations: [
+    trigger('artistState', [
+      state('inactive', style({
+        opacity: 0
+      })),
+      state('active',   style({
+        opacity: 1
+      })),
+      transition('inactive => active', [
+        animate('200ms ease-out')
+      ])
+    ]),
+    trigger('bioFullState', [
+      state('inactive', style({
+        height: '116px',
+      })),
+      state('active',   style({
+        height: '*'
+      })),
+      transition('inactive <=> active', [
+        animate('150ms ease-out')
+      ])
+    ])
+  ]
 })
 export class ArtistComponent implements OnInit {
-    constructor(private route: ActivatedRoute,
-        private titleService: Title,
-        private spotifyService: SpotifyService,
-        private quantoneService: QuantoneService) {}
+  constructor(private route: ActivatedRoute,
+      private titleService: Title,
+      private spotifyService: SpotifyService,
+      private quantoneService: QuantoneService) {}
 
-    private sub: any;
-    private searchQueryStream: BehaviorSubject<string>;
-    private artistId: string;
-    @ViewChild(ArtistAlbumsComponent)
-    private artistAlbumsComponent: ArtistAlbumsComponent;
+  private sub: any;
+  private searchQueryStream: BehaviorSubject<string>;
+  private artistId: string;
+  private hasBio: boolean = false;
+  private showFullBio: boolean = false;
+  @ViewChild(ArtistAlbumsComponent)
+  private artistAlbumsComponent: ArtistAlbumsComponent;
 
-    public canShowAlbums: boolean = false;
-    public artist: Artist;
-    public bioState: string = 'inactive';
-    public imageState: string = 'inactive';
+  public canShowAlbums: boolean = false;
+  public artist: Artist;
+  public bioState: string = 'inactive';
+  public imageState: string = 'inactive';
 
-    ngOnInit() {
-        let self = this;
-        this.sub = this
-            .route
-            .params
-            .subscribe(params => {
-                let paramId = params['id'];
-                self.artistId = paramId;
-                if (!!self.searchQueryStream === false) {
-                    self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
-                    self.searchQueryStream
-                    .concatMap<Artist>((id: string) => {
-                        return self.spotifyService.getArtist(id)
-                                .concatMap(artist => {
-                                    self.artist = artist;
-                                    this.titleService.setTitle(artist.Name);
-                                    this.imageState = 'active';
-                                    this.artistAlbumsComponent.showAlbums();
+  ngOnInit() {
+      let self = this;
+      this.sub = this
+          .route
+          .params
+          .subscribe(params => {
+              let paramId = params['id'];
+              self.artistId = paramId;
+              if (!!self.searchQueryStream === false) {
+                  self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
+                  self.searchQueryStream
+                  .concatMap<Artist>((id: string) => {
+                      return self.spotifyService.getArtist(id)
+                              .concatMap(artist => {
+                                  self.artist = artist;
+                                  this.titleService.setTitle(artist.Name);
+                                  this.imageState = 'active';
+                                  this.artistAlbumsComponent.showAlbums();
 
-                                    return this.quantoneService
-                                            .getArtist(artist.Id)
-                                            .map(quantoneArtist => {
-                                                if (!!quantoneArtist && quantoneArtist.length > 0)
-                                                    artist.Bio = quantoneArtist[0].Bio;
+                                  return this.quantoneService
+                                          .getArtist(artist.Id)
+                                          .map(quantoneArtist => {
+                                              if (!!quantoneArtist && quantoneArtist.length > 0)
+                                                  this.hasBio = !!quantoneArtist[0].Bio;
+                                                  artist.Bio = quantoneArtist[0].Bio || `${artist.Name}'s bio is yet to be written.`;
 
-                                                this.bioState = 'active';
-                                                return artist;
-                                            });
-                                });
-                    })
-                    .subscribe(artist => {
-                        self.artist = artist;
-                    });
+                                              this.bioState = 'active';
+                                              return artist;
+                                          });
+                              });
+                  })
+                  .subscribe(artist => {
+                      self.artist = artist;
+                  });
 
-                } else {
-                    self.searchQueryStream.next(self.artistId);
-                }
-            },
-            error => console.log(error));
+              } else {
+                  self.searchQueryStream.next(self.artistId);
+              }
+          },
+          error => console.log(error));
+  }
+
+  _getParam(param: any) {
+    if (!!param && param !== "true") {
+        return param;
     }
-    _getParam(param: any) {
-      if (!!param && param !== "true") {
-          return param;
-      }
-      return " ";
+    return " ";
+  }
+
+  toggleBio() {
+    this.showFullBio = !this.hasBio || !this.showFullBio;
+  }
+
+  showFullBioState() {
+    return this.showFullBio ? 'active' : 'inactive';
   }
 }

@@ -20,6 +20,27 @@
     font-size: 1.2em;
     margin: 10px 0;
     color: #75bbbb;
-    height: 116px;
     overflow: hidden;
+    position: relative;
+}
+
+.bio:hover {
+  cursor: pointer;
+}
+
+.has-no-bio:hover {
+  cursor: default;
+}
+
+.show-more-bio {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    background-color: #292c2c;
+    opacity: 0.9;
+}
+
+.hide-more-bio {
+  position: inherit;
 }

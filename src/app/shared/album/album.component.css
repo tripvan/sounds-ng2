@@ -120,3 +120,8 @@
 .track-link {
     display: block;
 }
+
+.track-number {
+    width: 18px;
+    display: inline-block;
+}

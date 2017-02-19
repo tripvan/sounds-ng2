@@ -1,4 +1,10 @@
 <h1 class="name">{{artist?.Name}}</h1>
 <div class="image" [@artistState]="imageState" [ngStyle]="{'background-image': 'url(' + artist?.ImageUrl + ')'}" ></div>
-<div class="bio">{{artist?.Bio}}</div>
+<div class="bio" [class.has-no-bio]="!hasBio" [@artistState]="bioState" [@bioFullState]="showFullBioState()" (click)="toggleBio()">
+  {{artist?.Bio}}
+  <div *ngIf="hasBio" class="show-more-bio" [class.hide-more-bio]="showFullBio">
+    <i *ngIf="!showFullBio" class="listitem-subdued tracks-chevron glyphicon glyphicon-chevron-down"></i>
+    <i *ngIf="showFullBio" class="listitem-subdued tracks-chevron glyphicon glyphicon-chevron-up"></i>
+  </div>
+</div>
 <tc-artist-albums></tc-artist-albums>

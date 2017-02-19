@@ -44,7 +44,7 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private spotifyService: SpotifyService,
     private quantoneService: QuantoneService) {}
-  
+
   private sub: any;
   private errorMessage;
   private query: ArtistSearchQuery;
@@ -55,7 +55,7 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
   public albums: Observable<SpotifyAlbum[]>;
   public state: string = 'inactive';
   public noResultsState: string = 'active';
-  
+
   ngOnInit() {
       this.sub = this
         .route
@@ -67,14 +67,14 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
                 this.searchQueryStream = new BehaviorSubject<ArtistSearchQuery>(this.query);
                 this.albums = this.searchQueryStream
                 .concatMap<SpotifyAlbum[]>((query: ArtistSearchQuery) => {
-                    if(this.query.scrolling == false) {
+                    if (this.query.scrolling === false) {
                         this.state = 'inactive';
                     }
                     return this.spotifyService.getArtistAlbums(query)
                         .map((albums: SpotifyAlbum[]) => {
                             this.albumsLoaded = true;
-                            
-                            if(this.canShowAlbums){
+
+                            if (this.canShowAlbums) {
                                 this.showAlbums();
                             }
                             this.query.scrolling = false;
@@ -93,9 +93,9 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
       }
       return " ";
   }
-  showAlbums(){
+  showAlbums() {
       this.canShowAlbums = true;
-      if(this.albumsLoaded) {
+      if (this.albumsLoaded) {
           this.state = 'active';
       }
   }
@@ -114,7 +114,7 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
   }
 
   showTracks(album: SpotifyAlbum) {
-      if(!album.showTracks && !album.tracksLoaded) {
+      if (!album.showTracks && !album.tracksLoaded) {
         this.quantoneService.getAlbum(album.id)
         .subscribe(
             albumResult => this.spotifyService.updateAlbum(album, albumResult),
@@ -129,7 +129,7 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
       album.showDownChevron = !album.showTracks;
       album.isCopyrightHidden = true;
   }
-  
+
   recordsHaveEnded() {
       return this.spotifyService.getTotal() < this.query.offset;
   }
