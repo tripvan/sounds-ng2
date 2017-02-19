@@ -136,9 +136,7 @@ export class SpotifyService {
                                 });
                                 this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.release_date, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
                             });
-                            return this.spotifyAlbums.albums.sort((a, b) => {
-                                return +b.popularity - +a.popularity;
-                            });
+                            return this.spotifyAlbums.albums;
                         }
                     }
                 );
