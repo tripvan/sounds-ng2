@@ -1,4 +1,4 @@
-import { Component, Input,
+import { ChangeDetectionStrategy, Component, Input,
   trigger,
   state,
   style,
@@ -10,6 +10,7 @@ import { QuantoneService } from '../../services/quantone.service';
 import { SpotifyAlbum } from '../../services/model/spotifyAlbum';
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'tc-album',
     template: require('./album.component.html'),
       styles: [require('./album.component.css')],
@@ -21,14 +22,14 @@ import { SpotifyAlbum } from '../../services/model/spotifyAlbum';
             state('true',   style({
                 opacity: 1
             })),
-            transition('* => true', [ 
-                style({ opacity: 0 }), 
-                animate('250ms 100ms ease-in')
-            ]),
-            transition('true => *', [
-                style({opacity: 0}), 
-                animate(10)
-            ])
+            // transition('* => true', [ 
+            //     style({ opacity: 0 }), 
+            //     animate('100ms ease-in')
+            // ]),
+            // transition('true => *', [
+            //     style({opacity: 0}), 
+            //     animate(10)
+            // ])
         ])
     ]
 })
@@ -39,14 +40,13 @@ export class AlbumComponent {
     @Input() public album: SpotifyAlbum;
     public state: string = 'false';
   showTracks(album: SpotifyAlbum) {
-      album.showTracks = !album.showTracks;
-      this.state = album.showTracks ? 'true' : 'false';
       this.showChevron(album);
+      album.showTracks = !album.showTracks;
+    //   this.state = album.showTracks ? 'true' : 'false';
   }
 
   showChevron(album: SpotifyAlbum) {
-      album.showUpChevron = album.showTracks;
-      album.showDownChevron = !album.showTracks;
-      album.isCopyrightHidden = true;
+      album.showUpChevron = !album.showTracks;
+      album.showDownChevron = album.showTracks;
   }
 }

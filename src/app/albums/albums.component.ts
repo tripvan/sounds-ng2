@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy,
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy,
   trigger,
   state,
   style,
@@ -16,6 +16,7 @@ import { QuantoneService } from '../services/quantone.service';
 import { SpotifyService } from '../services/spotify.service';
 
 @Component({
+    // changeDetection: ChangeDetectionStrategy.OnPush,
   template: require('./albums.component.html'),
   animations: [
       trigger('albumState', [

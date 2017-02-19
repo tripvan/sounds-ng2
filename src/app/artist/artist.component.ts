@@ -68,23 +68,23 @@ export class ArtistComponent implements OnInit {
                                     self.artist = artist;
                                     this.titleService.setTitle(artist.Name);
                                     this.imageState = 'active';
+                                    this.artistAlbumsComponent.showAlbums();
+
                                     return this.quantoneService
                                             .getArtist(artist.Id)
                                             .map(quantoneArtist => {
-                                                if(!!quantoneArtist && quantoneArtist.length > 0) 
+                                                if (!!quantoneArtist && quantoneArtist.length > 0)
                                                     artist.Bio = quantoneArtist[0].Bio;
 
                                                 this.bioState = 'active';
-                                                this.artistAlbumsComponent.showAlbums();
-                                                
                                                 return artist;
-                                            })
+                                            });
                                 });
                     })
                     .subscribe(artist => {
                         self.artist = artist;
                     });
-                    
+
                 } else {
                     self.searchQueryStream.next(self.artistId);
                 }

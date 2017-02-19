@@ -1,4 +1,4 @@
 <h1 class="name">{{artist?.Name}}</h1>
 <div class="image" [@artistState]="imageState" [ngStyle]="{'background-image': 'url(' + artist?.ImageUrl + ')'}" ></div>
-<div class="bio" [@artistState]="bioState">{{artist?.Bio}}</div>
+<div class="bio">{{artist?.Bio}}</div>
 <tc-artist-albums></tc-artist-albums>

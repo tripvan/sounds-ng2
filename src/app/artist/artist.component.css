@@ -20,4 +20,6 @@
     font-size: 1.2em;
     margin: 10px 0;
     color: #75bbbb;
+    height: 116px;
+    overflow: hidden;
 }

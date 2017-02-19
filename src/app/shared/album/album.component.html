@@ -16,8 +16,7 @@
 </div>
 <template [ngIf]="album.recordings && album.showTracks">
     <div class="listitemsmall listitemsmall-link" *ngFor="let recording of album.recordings; let i=index">
-        <a class="track-link truncate" [href]="recording.trustedUri" [@tracksState]="state">{{(i+ 1) + '. ' + recording?.Name}}
-        {{recording?.Bpm}} <span *ngIf="!!recording?.Bpm">BPM</span> {{recording?.Duration}} <i *ngIf="!!recording?.Duration" class="glyphicon glyphicon-time"></i>
+        <a class="track-link truncate" [href]="recording.trustedUri">{{(i+ 1) + '. ' + recording?.Name}}
         </a>
     </div>
 </template>
