@@ -70,6 +70,11 @@
     max-width: inherit;
 }
 
+.header-scrollbar {
+  height: 104px;
+  overflow: hidden;
+}
+
 input {
     color: white;
     margin: 0;
