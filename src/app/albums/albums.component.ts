@@ -73,9 +73,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
             this.noResultsState = 'inactive';
             this.noResultsSubscription && this.noResultsSubscription.unsubscribe();
             this.query = this._getSearchQueryFromParams(params);
-            if (!this.query.isValid()) {
-                return;
-            }
+
             if (this._noSearchQueryStream()) {
                 this._initSearchQueryStream();
             } else {

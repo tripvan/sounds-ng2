@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input,
+import { Component, Input,
   trigger,
   state,
   style,
@@ -10,7 +10,6 @@ import { QuantoneService } from '../../services/quantone.service';
 import { SpotifyAlbum } from '../../services/model/spotifyAlbum';
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'tc-album',
     template: require('./album.component.html'),
       styles: [require('./album.component.css')],
