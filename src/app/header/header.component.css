@@ -26,6 +26,10 @@
     padding: 14px 5px;
     color: #35C0E0;
     max-width: 100px;
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
 }
 
 .headeritem-reveal i {
