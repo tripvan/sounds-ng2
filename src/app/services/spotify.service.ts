@@ -71,13 +71,13 @@ export class SpotifyService {
         let fullQuery: string = "?q=" + query.query + label + year + "&type=album&offset=" + query.offset + "&limit=" + this.perPage + "&market=GB";
 
         return this.http.get(this.spotifyUrl + "search" + fullQuery)
-            .map<SpotifyAlbums | any>(this.extractAlbumIdData)
-            .catch<SpotifyAlbums>(this.handleError);
+            .map<Response, SpotifyAlbums | any>(this.extractAlbumIdData)
+            .catch<any, SpotifyAlbums>(this.handleError);
     }
     getArtistAlbumIds(query: ArtistSearchQuery): Observable<SpotifyAlbums> {
         return this.http.get(this.spotifyUrl + "artists/" + query.id + '/albums?album_type=album,single&limit=' + this.perPage + '&offset=' + query.offset + '&market=GB')
-            .map<SpotifyAlbums>(this.extractArtistAlbumIdData)
-            .catch<SpotifyAlbums>(this.handleError);
+            .map<Response, SpotifyAlbums>(this.extractArtistAlbumIdData)
+            .catch<any, SpotifyAlbums>(this.handleError);
     }
     private extractArtistAlbumIdData(response: Response): SpotifyAlbum | any {
         let body = response.json();
@@ -99,8 +99,8 @@ export class SpotifyService {
         params.set("ids", albumIds.join(","));
 
         return this.http.get(this.spotifyUrl + "albums", { search: params })
-            .map<SpotifyAlbum[]>(this.extractAlbumData)
-            .catch<SpotifyAlbum[]>(this.handleError);
+            .map<Response, SpotifyAlbum[]>(this.extractAlbumData)
+            .catch<any, SpotifyAlbum[]>(this.handleError);
     }
 
     private extractAlbumData(response: Response) {
@@ -160,13 +160,13 @@ export class SpotifyService {
 
     getArtist(id: string): Observable<Artist> {
         return this.http.get(this.spotifyUrl + "artists/" + id)
-            .map<Artist | any>(this.extractArtistData)
-            .catch<Artist>(this.handleError);
+            .map<Response, Artist | any>(this.extractArtistData)
+            .catch<any, Artist>(this.handleError);
     }
 
     private extractArtistData(response: Response): Artist | any {
         let artist = response.json();
-        if(!!artist) {
+        if (!!artist) {
             let newArtist = new Artist(artist.id, artist.name, '', artist.images);
             return newArtist;
         }

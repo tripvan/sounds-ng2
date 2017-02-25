@@ -15,32 +15,30 @@ export class QuantoneService {
     private baseUrl: string = 'http://sounds-api.azurewebsites.net/api/';
     getArtist(artistId): Observable<Artist[]>  {
         return this.http.get(this.baseUrl +  'artist/' + artistId)
-                    .map<Artist[]>(this.extractData)
-                    .catch<Artist[]>(this.handleError);
+                    .map<Response, Artist[]>(this.extractData)
+                    .catch<any, Artist[]>(this.handleError);
     }
     getArtists(artistIds: Array<string>): Observable<Artist[]>  {
         return Observable.from(artistIds)
             .map(artistId => {
             return this.http.get(this.baseUrl + 'artist/' + artistId)
-                    .map<Artist[]>(this.extractData)
-                    .catch<Artist[]>(this.handleError);
+                    .map<Response, Artist[]>(this.extractData)
+                    .catch<any, Artist[]>(this.handleError);
         }).concatAll();
     }
 
     getAlbum(id: string): Observable<Album[]>  {
         return this.http.get(this.baseUrl + 'albumbyid/' + id)
-                    .map<Album[]>(this.extractData)
-                    .catch<Album[]>(this.handleError);
+                    .map<Response, Album[]>(this.extractData)
+                    .catch<any, Album[]>(this.handleError);
     }
 
-    private extractData(response: Response) {
+    private extractData(response: Response): any {
         let body = response.json();
         return body.Data || {};
     }
 
-
-
-    private handleError(error: any) {
+    private handleError(error: any): any {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - $(error.statusText)` : 'Server error';
         console.log(errMsg);
