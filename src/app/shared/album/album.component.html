@@ -1,13 +1,15 @@
 <div class="listitem row">
     <div class="listitem-image"><img [src]="album.image.url" /></div>
     <a [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
-    <div class="listitem-small truncate" *ngFor="let artist of album.artists; let last=last">
+    <div class="listitem-small truncate artist" *ngFor="let artist of album.artists; let last=last">
         <a routerLink="/artist/{{artist.id}}">{{artist.name}}</a>
-        <span *ngIf="!last">|</span>
+        <span class="seperator" *ngIf="!last"> | </span>
         <br *ngIf="last" />
     </div>
-    <span class="listitem-smaller popularity">{{album.popularity}}</span> 
-    <span class="listitem-smaller">{{album.release_date}}</span>
+    <div class="listitem-small">
+      <span class="listitem-smaller popularity">{{album.popularity}}</span> 
+      <span class="listitem-smaller">{{album.release_date}}</span>
+    </div>
 </div>
 <div role="button" class="listitemsmall truncate" (click)="showTracks(album)">
     <i *ngIf="album.showDownChevron" class="listitem-subdued tracks-chevron glyphicon glyphicon-chevron-down"></i>

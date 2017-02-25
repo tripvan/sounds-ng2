@@ -105,6 +105,15 @@
     display: initial;
 }
 
+.artist {
+  display: inline-block;
+  max-width: 160px;
+}
+
+.artist .seperator {
+  margin-right: 4px;
+}
+
 .popularity {
     padding: 1px 4px;
     border: 1px solid #609090;
