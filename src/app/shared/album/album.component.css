@@ -101,6 +101,11 @@
     display: initial;
 }
 
+.listitem-image { 
+  width: 84px; 
+  float: left; 
+} 
+
 .artist a {
   display: inline-block;
 }
