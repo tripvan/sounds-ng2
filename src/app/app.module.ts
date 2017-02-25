@@ -12,13 +12,13 @@ import { AlbumsModule } from './albums/albums.module';
 import { LabelsModule } from './labels/labels.module';
 
 @NgModule({
-  imports: [ 
+  imports: [
     BrowserModule,
-    HttpModule, 
+    HttpModule,
     routing,
     SharedModule.forRoot(),
-    HeaderModule, 
-    ArtistModule, 
+    HeaderModule,
+    ArtistModule,
     AlbumsModule,
     LabelsModule
     ],

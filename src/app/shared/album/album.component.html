@@ -1,14 +1,16 @@
-<div class="listitem row">
-    <div class="listitem-image"><img [src]="album.image.url" /></div>
-    <a [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
-    <div class="listitem-small truncate artist" *ngFor="let artist of album.artists; let last=last">
-        <a routerLink="/artist/{{artist.id}}">{{artist.name}}</a>
-        <span class="seperator" *ngIf="!last"> | </span>
-        <br *ngIf="last" />
-    </div>
-    <div class="listitem-small">
-      <span class="listitem-smaller popularity">{{album.popularity}}</span> 
-      <span class="listitem-smaller">{{album.release_date}}</span>
+<div fxLayout="row" class="listitem row">
+    <div fxFlex="80px" class="listitem-image"><img [src]="album.image.url" /></div>
+    <div fxFlex fxLayoutWrap class="truncate">
+      <a fxFlex="grow" [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
+      <div class="listitem-small artist" *ngFor="let artist of album.artists; let last=last">
+          <a class="truncate" routerLink="/artist/{{artist.id}}">{{artist.name}}</a>
+          <span class="seperator" *ngIf="!last"> | </span>
+          <br *ngIf="last" />
+      </div>
+      <div fxFlexFill class="listitem-small">
+        <span class="listitem-smaller popularity">{{album.popularity}}</span> 
+        <span class="listitem-smaller">{{album.release_date}}</span>
+      </div>
     </div>
 </div>
 <div role="button" class="listitemsmall truncate" (click)="showTracks(album)">

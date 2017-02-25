@@ -11,11 +11,7 @@
     margin-bottom: 20px;
     border-bottom: solid 1px #2EC7C7;
 }
-    
-.listitem-image {
-    width: 84px;
-    float: left;
-}
+ 
 
 .listitem-large {
     display: block;
@@ -105,9 +101,9 @@
     display: initial;
 }
 
-.artist {
+.artist a {
+  max-width: 136px;
   display: inline-block;
-  max-width: 160px;
 }
 
 .artist .seperator {
