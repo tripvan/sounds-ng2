@@ -22,3 +22,4 @@ import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/of';
 
 require("bootstrap/less/bootstrap.less");
+import 'web-animations-js/web-animations.min'
