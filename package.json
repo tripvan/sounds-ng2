@@ -27,11 +27,11 @@
     "@angular/platform-browser-dynamic": "2.4.8",
     "@angular/platform-server": "2.4.8",
     "@angular/router": "3.4.8",
-    "angular2-infinite-scroll": "^0.1.4",
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.0",
     "ie-shim": "^0.1.0",
     "rxjs": "5.2.0",
+    "web-animations-js": "2.2.2",
     "zone.js": "0.7.7"
   },
   "devDependencies": {
