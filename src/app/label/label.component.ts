@@ -4,8 +4,8 @@ import { Label } from '../services/model/label';
 
 @Component({
     selector: 'tc-label',
-    template: require('./label.component.html'),
-    styles: [require('./label.component.css')]
+    templateUrl: './label.component.html',
+    styleUrls: ['./label.component.css']
 })
 export class LabelComponent {
     @Input()

@@ -16,7 +16,7 @@ import { SpotifyService } from "../services/spotify.service";
 
 @Component({
     selector: "tc-artist-albums",
-    template: require("./artist-albums.component.html"),
+    templateUrl: "./artist-albums.component.html",
     animations: [
         trigger('albumState', [
             state('inactive', style({
@@ -47,11 +47,11 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
 
   private sub: any;
   private errorMessage;
-  private query: ArtistSearchQuery;
   private searchQueryStream: BehaviorSubject<ArtistSearchQuery>;
   private albumsLoaded: boolean = false;
   private canShowAlbums: boolean = false;
 
+  public query: ArtistSearchQuery;
   public albums: Observable<SpotifyAlbum[]>;
   public state: string = 'inactive';
   public noResultsState: string = 'active';

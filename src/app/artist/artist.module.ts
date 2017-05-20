@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
@@ -9,7 +10,7 @@ import { QuantoneService } from '../services/quantone.service';
 import { routing } from './artist.routing';
 
 @NgModule({
-    imports: [SharedModule, routing],
+    imports: [CommonModule, SharedModule, routing],
     declarations: [ArtistComponent, ArtistAlbumsComponent],
     providers: [SpotifyService, QuantoneService]
 })

@@ -10,6 +10,8 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/observable/timer';
 
 import { SearchQuery } from '../services/model/searchQuery';
 import { SpotifyAlbum } from '../services/model/spotifyAlbum';
@@ -17,8 +19,8 @@ import { QuantoneService } from '../services/quantone.service';
 import { SpotifyService } from '../services/spotify.service';
 
 @Component({
-  template: require('./albums.component.html'),
-  styles: [require('./albums.component.css')],
+  templateUrl: './albums.component.html',
+  styleUrls: ['./albums.component.css'],
   animations: [
       trigger('albumState', [
       state('inactive', style({
@@ -51,11 +53,11 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
     private sub: any;
     private errorMessage;
-    private query: SearchQuery;
     private searchQueryStream: BehaviorSubject<SearchQuery>;
     private noResultsTimer = Observable.timer(3000);
     private noResultsSubscription: Subscription;
 
+    public query: SearchQuery;
     public albums: Observable<SpotifyAlbum[]>;
     public state: string = 'inactive';
     public noResultsState: string = 'inactive';

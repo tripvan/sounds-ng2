@@ -9,6 +9,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { SearchQuery } from "../services/model/searchQuery";
 import { YearsService } from "../services/years.service";
@@ -17,8 +19,8 @@ import { Label } from '../services/model/label';
 
 @Component({
     selector: 'tc-header',
-    template: require('./header.component.html'),
-    styles: [require('./header.component.css')],
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
     animations: [
         trigger('sliderItemsState', [
         state('inactive', style({
@@ -41,8 +43,6 @@ export class HeaderComponent implements OnInit {
   private errorMessage: string;
   private freeTextSearchQueryStream = new Subject<SearchQuery>();
   private searchQueryStream = new Subject<SearchQuery>();
-  private showYears: boolean = false;
-  private showLabels: boolean = false;
   private queryParamsSubscription: Subscription;
 
   public years: any[];
@@ -53,7 +53,9 @@ export class HeaderComponent implements OnInit {
   public label: string;
   public debounceTime: number = 800;
   public sliderItemsState: string = '';
-
+  public showYears: boolean = false;
+  public showLabels: boolean = false;
+  
   freeTextSearchQuery: Observable<SearchQuery> = this.freeTextSearchQueryStream
     .debounceTime(this.debounceTime)
     .distinctUntilChanged();

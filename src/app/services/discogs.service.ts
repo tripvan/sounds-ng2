@@ -20,7 +20,7 @@ export class DiscogsService {
         let artist = response.json();
         console.log(artist);
         if(!!artist) {
-            let newArtist = new Artist(artist.id, artist.name, '');
+            let newArtist = new Artist(artist.id, artist.name, '', []);
             console.log(newArtist); 
             return newArtist;
         }

@@ -204,7 +204,7 @@ module.exports = {
       }
     ]),
     new HtmlWebpackPlugin({
-      template: 'src/index.ejs',
+      template: 'src/index.html',
       chunksSortMode: 'dependency'
     })
   ],

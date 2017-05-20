@@ -18,9 +18,9 @@
     <i *ngIf="album.showUpChevron" class="listitem-subdued tracks-chevron glyphicon glyphicon-chevron-up"></i>
     <span class="listitem-subdued">{{album.copyright?.text}}</span> 
 </div>
-<template [ngIf]="album.recordings && album.showTracks">
+<ng-template [ngIf]="album.recordings && album.showTracks">
     <div class="listitemsmall listitemsmall-link" *ngFor="let recording of album.recordings; let i=index">
         <a class="track-link truncate" [href]="recording.trustedUri"><span class="track-number">{{(i+ 1) + '.'}}</span> {{recording?.Name}}
         </a>
     </div>
-</template>
+</ng-template>

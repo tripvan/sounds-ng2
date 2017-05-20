@@ -1,4 +1,5 @@
 import { NgModule }      from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpModule } from "@angular/http";
 
@@ -7,18 +8,17 @@ import { routing } from './app.routing';
 
 import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
-import { ArtistModule } from './artist/artist.module';
 import { AlbumsModule } from './albums/albums.module';
 import { LabelsModule } from './labels/labels.module';
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpModule,
     routing,
     SharedModule.forRoot(),
     HeaderModule,
-    ArtistModule,
     AlbumsModule,
     LabelsModule
     ],

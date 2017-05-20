@@ -17,8 +17,8 @@ import { Artist } from '../services/model/artist';
 import { ArtistAlbumsComponent } from './artist-albums.component';
 
 @Component({
-  template: require('./artist.component.html'),
-  styles: [require('./artist.component.css')],
+  templateUrl: './artist.component.html',
+  styleUrls: ['./artist.component.css'],
   animations: [
     trigger('artistState', [
       state('inactive', style({
@@ -53,11 +53,11 @@ export class ArtistComponent implements OnInit {
   private sub: any;
   private searchQueryStream: BehaviorSubject<string>;
   private artistId: string;
-  private hasBio: boolean = false;
   private showFullBio: boolean = false;
   @ViewChild(ArtistAlbumsComponent)
   private artistAlbumsComponent: ArtistAlbumsComponent;
 
+  public hasBio: boolean = false;
   public canShowAlbums: boolean = false;
   public artist: Artist;
   public bioState: string = 'inactive';
