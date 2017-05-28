@@ -28,5 +28,6 @@
         <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event, true)" placeholder="Record Label..."/>
     </li>
     <li class="headeritem headeritem-reveal truncate" [class.headeritem-selected]="labelModel.Name.toString() === label" *ngFor="let labelModel of labels" (click)="searchByLabel(labelModel.Name)">{{labelModel.Name}}</li>
+    <!--<li class="headeritem headeritem-reveal" (click)="showLabels = false" ><a routerLink="/labels">More</a></li>-->
   </ul>
 </perfect-scrollbar>

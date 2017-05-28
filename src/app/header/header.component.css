@@ -9,7 +9,7 @@
 
 .headeritem a {
     padding: 14px;
-    display: block;
+    display: inline;
 }
 
 .headeritem a:hover {
@@ -46,12 +46,12 @@
     color: #3F4747;
 }
 
-.headeritem-margin li.headeritem-no-margin {
-    margin-right: 0;
+.headeritem-margin li, .headeritem-margin li.headeritem-no-margin {
+    margin-right: 4px;
 }
 
 .headeritem-margin li {
-    margin-right: 4px;
+  float: left;
 }
 
 .headeritem-hidden {
