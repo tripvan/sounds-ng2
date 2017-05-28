@@ -1,8 +1,10 @@
+import { HomeComponent } from './home/home.component';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule  } from '@angular/router';
 
 export const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: 'search' },
+    { path: '', component: HomeComponent },
+    { path: 'search', loadChildren: 'app/albums/albums.module#AlbumsModule'},
     { path: 'artist/:id', loadChildren: 'app/artist/artist.module#ArtistModule'}
 ];
 
