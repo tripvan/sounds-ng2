@@ -85,11 +85,12 @@ export class ArtistComponent implements OnInit {
                                   return this.quantoneService
                                           .getArtist(artist.Id)
                                           .map(quantoneArtist => {
-                                              if (!!quantoneArtist && quantoneArtist.length > 0)
+                                              if (!!quantoneArtist && quantoneArtist.length > 0) {
                                                   this.hasBio = !!quantoneArtist[0].Bio;
                                                   artist.Bio = quantoneArtist[0].Bio || `${artist.Name}'s bio is yet to be written.`;
 
-                                              this.bioState = 'active';
+                                                  this.bioState = 'active';
+                                              }
                                               return artist;
                                           });
                               });
