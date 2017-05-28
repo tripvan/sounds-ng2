@@ -9,7 +9,6 @@ import { routing } from './app.routing';
 
 import { SharedModule } from './shared/shared.module';
 import { HeaderModule } from './header/header.module';
-// import { AlbumsModule } from './albums/albums.module';
 import { LabelsModule } from './labels/labels.module';
 
 @NgModule({
@@ -21,12 +20,10 @@ import { LabelsModule } from './labels/labels.module';
     SharedModule.forRoot(),
     HeaderModule,
     HomeModule,
-    // AlbumsModule,
     LabelsModule
     ],
   declarations: [ AppComponent ],
   providers: [ Title ],
-  // providers: [HTTP_PROVIDERS],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
