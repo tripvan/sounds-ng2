@@ -1,11 +1,11 @@
 Sounds Ng2
 =========
 
-Sounds Ng2 is an Angular 2 web application written in TypeScript, built with webpack, and hosted on [Azure](http://sounds-ng2.azurewebsites.net).
+Sounds Ng2 is an Angular web application written in TypeScript, built with Webpack, and hosted on [Azure](http://sounds-ng2.azurewebsites.net).
 
 ## Purpose
 
-Learning Angular 2, TypeScript, webpack, and Azure. 
+Learn Angular, TypeScript, Webpack, and Azure. 
 
 ## The Website
 
