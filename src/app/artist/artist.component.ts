@@ -9,6 +9,7 @@ import { Title } from '@angular/platform-browser';
 
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/concatMap';
 
 import { SpotifyService } from "../services/spotify.service";
 import { QuantoneService } from "../services/quantone.service";
@@ -69,8 +70,7 @@ export class ArtistComponent implements OnInit {
           .route
           .params
           .subscribe(params => {
-              let paramId = params['id'];
-              self.artistId = paramId;
+              self.artistId = params['id'];
               if (!!self.searchQueryStream === false) {
                   self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
                   self.searchQueryStream
