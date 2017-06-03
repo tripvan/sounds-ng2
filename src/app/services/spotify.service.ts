@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Response, URLSearchParams } from "@angular/http";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/throw';
 
 import { Artist } from "./model/artist";
 import { Album } from "./model/album";
@@ -15,7 +16,7 @@ import { ArtistSearchQuery } from "./model/artistSearchQuery";
 @Injectable()
 export class SpotifyService {
     constructor(private http: Http, private sanitiser: DomSanitizer) {}
-    private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; //http://qt-api.tristanchanning.com:8070
+    private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; //"http://qt-api.tristanchanning.com:8070/api/spotify/";
     private spotifyAlbums: SpotifyAlbums = new SpotifyAlbums(0, []);
     public perPage: number = 20;
 
@@ -56,26 +57,26 @@ export class SpotifyService {
     }
 
     getAlbumIds(query: SearchQuery): Observable<SpotifyAlbums> {
+        let term = query.query;
+        if (!term || term.length < 2) {
+            term = "";
+        }
         let label = query.label;
-        if (!!label && label.length > 2) {
-            label = " label:\"" + label + "\"";
-        } else {
+        if (!label || label.length < 2) {
             label = "";
         }
         let year = query.year;
-        if (!!year && year.length > 2) {
-            year = " year:" + year;
-        } else {
+        if (!year || year.length < 2) {
             year = "";
         }
-        let fullQuery: string = query.query + label + year;
+        const url = `${this.spotifyUrl}search?query=${term}&label=${label}&year=${year}&offset=${query.offset}&limit=${this.perPage}`;
 
-        return this.http.get(this.spotifyUrl + "search/" + fullQuery + "/" + query.offset + "/" + this.perPage)
+        return this.http.get(url)
             .map<Response, SpotifyAlbums | any>(this.extractAlbumIdData)
             .catch<any, SpotifyAlbums>(this.handleError);
     }
     getArtistAlbumIds(query: ArtistSearchQuery): Observable<SpotifyAlbums> {
-        return this.http.get(this.spotifyUrl + "artistalbums/" + query.id + '/' + query.offset + '/' + this.perPage)
+        return this.http.get(this.spotifyUrl + "artistalbums?artistId=" + query.id + '&offset=' + query.offset + '&limit=' + this.perPage)
             .map<Response, SpotifyAlbums>(this.extractArtistAlbumIdData)
             .catch<any, SpotifyAlbums>(this.handleError);
     }
@@ -159,7 +160,7 @@ export class SpotifyService {
     }
 
     getArtist(id: string): Observable<Artist> {
-        return this.http.get(this.spotifyUrl + "artist/" + id)
+        return this.http.get(this.spotifyUrl + "artist?artistId=" + id)
             .map<Response, Artist | any>(this.extractArtistData)
             .catch<any, Artist>(this.handleError);
     }
