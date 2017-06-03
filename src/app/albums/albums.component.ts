@@ -71,7 +71,6 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         .queryParams
         .subscribe(params => {
             this.state = 'inactive';
-            console.log('noresulstate = inactive');
             this.noResultsState = 'inactive';
             this.noResultsSubscription && this.noResultsSubscription.unsubscribe();
             this.query = this._getSearchQueryFromParams(params);
@@ -114,7 +113,6 @@ export class AlbumsComponent implements OnInit, OnDestroy {
                     this.query.scrolling = false;
                     if (albums.length === 0) {
                         this.noResultsSubscription = this.noResultsTimer.subscribe(() => {
-                          console.log('noresulstate = active');
                           this.noResultsState = 'active'
                         });
                     }
