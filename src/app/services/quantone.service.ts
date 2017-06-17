@@ -12,7 +12,9 @@ import { Album } from './model/album';
 @Injectable()
 export class QuantoneService {
     constructor(private http: Http) {}
-    private baseUrl: string = 'http://sounds-api.azurewebsites.net/api/';
+    private baseUrl: string = 'http://sounds-api.azurewebsites.net/api/quantone/';
+    // private baseUrl: string = 'http://sounds-api-dev.azurewebsites.net/api/quantone/';
+    // private baseUrl: string = 'http://localhost:5000/api/quantone/';
     getArtist(artistId): Observable<Artist[]>  {
         return this.http.get(this.baseUrl +  'artist/' + artistId)
                     .map<Response, Artist[]>(this.extractData)
@@ -35,7 +37,7 @@ export class QuantoneService {
 
     private extractData(response: Response): any {
         let body = response.json();
-        return body.Data || {};
+        return body.data || {};
     }
 
     private handleError(error: any): any {

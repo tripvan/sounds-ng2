@@ -1,6 +1,6 @@
 export class Artist {
     public ImageUrl: string;
-    constructor(public Id: string, public Name: string, public Bio: string, public Images: Array<any>) {
+    constructor(public Id: string, public Name: string, public bio: string, public Images: Array<any>) {
         this.ImageUrl = this.getImageUrl();
     }
     getImageUrl() {

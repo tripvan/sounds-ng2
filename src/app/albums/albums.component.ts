@@ -64,38 +64,37 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     public isLoading: boolean = false;
 
   ngOnInit() {
-      this.sub = this
-        .router
-        .routerState
-        .root
-        .queryParams
-        .subscribe(params => {
-            this.state = 'inactive';
-            this.noResultsState = 'inactive';
-            this.noResultsSubscription && this.noResultsSubscription.unsubscribe();
-            this.query = this._getSearchQueryFromParams(params);
+      this.sub = this.router.routerState.root.queryParams
+      .subscribe(params => {
+        this.state = 'inactive';
+        this.noResultsState = 'inactive';
+        this.noResultsSubscription && this.noResultsSubscription.unsubscribe();
+        this.query = this._getSearchQueryFromParams(params);
 
-            if (this._noSearchQueryStream()) {
-                this._initSearchQueryStream();
-            } else {
-                this.searchQueryStream.next(this.query);
-            }
-        },
-        error => console.log(error));
+        if (this._noSearchQueryStream()) {
+          this._initSearchQueryStream();
+        } else {
+          this.searchQueryStream.next(this.query);
+        }
+      },
+      error => console.log(error));
   }
 
   _getSearchQueryFromParams(params: Params){
-      return new SearchQuery(this._getParam(params['query']), this._getParam(params['label']), this._getParam(params['year']), 0);
+    return new SearchQuery(this._getParam(params['query']), this._getParam(params['label']), this._getParam(params['year']), 0, this._getParam(params['sortOrder']), this._getParam(params['sortDirection']));
   }
+
   _getParam(param: any) {
-      if (!!param && param !== 'true') {
-          return param;
-      }
-      return ' ';
+    if (!!param && param !== 'true') {
+      return param;
+    }
+    return ' ';
   }
+
   _noSearchQueryStream(){
-      return !!this.searchQueryStream === false;
+    return !!this.searchQueryStream === false;
   }
+  
   _initSearchQueryStream(){
     this.searchQueryStream = new BehaviorSubject<SearchQuery>(this.query);
     this.albums = this.searchQueryStream
@@ -128,6 +127,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   onScroll() {
     this.query.offset += this.spotifyService.perPage;
+    console.log('offset and total', this.query.offset, this.spotifyService.getTotal());
     if (this.query.offset >= this.spotifyService.getTotal()) {
         console.log('no more results');
         return;

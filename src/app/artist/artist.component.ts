@@ -54,7 +54,6 @@ export class ArtistComponent implements OnInit {
   private sub: any;
   private searchQueryStream: BehaviorSubject<string>;
   private artistId: string;
-  private showFullBio: boolean = false;
   @ViewChild(ArtistAlbumsComponent)
   private artistAlbumsComponent: ArtistAlbumsComponent;
 
@@ -63,6 +62,7 @@ export class ArtistComponent implements OnInit {
   public artist: Artist;
   public bioState: string = 'inactive';
   public imageState: string = 'inactive';
+  public showFullBio: boolean = false;
 
   ngOnInit() {
       let self = this;
@@ -86,8 +86,8 @@ export class ArtistComponent implements OnInit {
                                           .getArtist(artist.Id)
                                           .map(quantoneArtist => {
                                               if (!!quantoneArtist && quantoneArtist.length > 0) {
-                                                  this.hasBio = !!quantoneArtist[0].Bio;
-                                                  artist.Bio = quantoneArtist[0].Bio || `${artist.Name}'s bio is yet to be written.`;
+                                                  this.hasBio = !!quantoneArtist[0].bio;
+                                                  artist.bio = quantoneArtist[0].bio || `${artist.Name}'s bio is yet to be written.`;
 
                                                   this.bioState = 'active';
                                               }

@@ -6,6 +6,8 @@
     <div class="headeritem-reveal-container">
         <li class="headeritem headeritem-reveal" [class.headeritem-selected]="showYears" (click)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i></li>
         <li class="headeritem headeritem-reveal" [class.headeritem-selected]="showLabels" (click)="toggleLabels()">Labels<i class="glyphicon glyphicon-chevron-down" *ngIf="!showLabels"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showLabels"></i></li>
+        <li class="headeritem headeritem-reveal" (click)="toggleSortOrder()">{{sortOrderText}}</li>
+        <li class="headeritem headeritem-reveal" (click)="toggleSortDirection()">{{sortDirectionText}}</li>
     </div>
 </ul>
 <perfect-scrollbar *ngIf="showYears" class="header-scrollbar">

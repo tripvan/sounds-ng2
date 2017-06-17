@@ -55,6 +55,10 @@ export class HeaderComponent implements OnInit {
   public sliderItemsState: string = '';
   public showYears: boolean = false;
   public showLabels: boolean = false;
+  public sortOrderText: string = 'Popularity';
+  public sortOrder: number = 1;
+  public sortDirectionText: string = 'Desc';
+  public sortDirection: number = 1;
   
   freeTextSearchQuery: Observable<SearchQuery> = this.freeTextSearchQueryStream
     .debounceTime(this.debounceTime)
@@ -79,7 +83,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private _navigateToAlbums(search: SearchQuery) {
-      this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year } });
+      this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year, sortOrder: search.sortOrder, sortDirection: search.sortDirection } });
   }
 
   private _initSearchLists() {
@@ -96,6 +100,8 @@ export class HeaderComponent implements OnInit {
         this.label = this._getParam(params["label"]);
         this.query = this._getParam(params["query"]);
         this.year = this._getParam(params["year"]);
+        this.sortOrder = +this._getParam(params["sortOrder"]) ? +this._getParam(params["sortOrder"]) : 1;
+        this.sortDirection = +this._getParam(params["sortDirection"]) ? +this._getParam(params["sortDirection"]) : 1; 
     });
   }
 
@@ -114,9 +120,9 @@ export class HeaderComponent implements OnInit {
 
   public search(isFreeTextSearch: boolean = false) {
     if (isFreeTextSearch) {
-      this.freeTextSearchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
+      this.freeTextSearchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0, this.sortOrder, this.sortDirection));
     } else {
-      this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0));
+      this.searchQueryStream.next(new SearchQuery(this.query, this.label, this.year, 0, this.sortOrder, this.sortDirection));
     }
   }
 
@@ -147,5 +153,27 @@ export class HeaderComponent implements OnInit {
   public toggleLabels() {
     this.showLabels = !this.showLabels;
     this.showYears = false;
+  }
+  
+  public toggleSortOrder() {
+    if (this.sortOrder === 1) {
+      this.sortOrderText = 'Date';
+      this.sortOrder = 2
+    } else {
+      this.sortOrderText = 'Popularity';
+      this.sortOrder = 1
+    }
+    this.search(false);
+  }
+
+  public toggleSortDirection() {
+    if (this.sortDirection === 1) {
+      this.sortDirectionText = 'Asc';
+      this.sortDirection = 2
+    } else {
+      this.sortDirectionText = 'Desc';
+      this.sortDirection = 1
+    }
+    this.search(false);
   }
 }

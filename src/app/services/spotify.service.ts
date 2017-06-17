@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
-import { Http, Response, URLSearchParams } from "@angular/http";
+import { Headers, Http, Response, URLSearchParams, RequestOptions } from "@angular/http";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 
 import { Artist } from "./model/artist";
 import { Album } from "./model/album";
@@ -16,134 +17,96 @@ import { ArtistSearchQuery } from "./model/artistSearchQuery";
 @Injectable()
 export class SpotifyService {
     constructor(private http: Http, private sanitiser: DomSanitizer) {}
-    private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; //"http://qt-api.tristanchanning.com:8070/api/spotify/";
+    private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; 
+    // private spotifyUrl = "http://sounds-api-dev.azurewebsites.net/api/spotify/"; 
+    // private spotifyUrl = "http://qt-api.tristanchanning.com:8070/api/spotify/";
+    // private spotifyUrl = 'https://soundsapi-gcojuilvsi.now.sh/api/spotify/';
+    // private spotifyUrl = "http://localhost:5000/api/spotify/";
     private spotifyAlbums: SpotifyAlbums = new SpotifyAlbums(0, []);
-    public perPage: number = 20;
+    private query: SearchQuery;
+    private sortThreshold: number = 50;
+    public perPage: number = 50;
 
     getTotal() {
-        return this.spotifyAlbums.total;
+      return this.spotifyAlbums.total;
+    }
+
+    private _totalLessThanSortThreshold(){
+      return this.getTotal() <= this.sortThreshold;
     }
 
     getAlbums(query: SearchQuery): Observable<SpotifyAlbum[]> {
-        if (query.offset === 0) {
-             this.spotifyAlbums = new SpotifyAlbums(0, []);
-        }
-        return this.getAlbumIds(query)
-            .map(albumIds => {
-                this.spotifyAlbums.total = albumIds.total;
-                if (albumIds.total === 0) {
-                    return Observable.of(new Array<SpotifyAlbum>());
-                }
-            return this.getAlbumsByIds(albumIds.albums.map(album => album.id))
-                .map(
-                    albums => {
-                        if (albums.length > 0) {
-                            albums.forEach(album => {
+      if (this._totalLessThanSortThreshold() && this._areSameQuery(query, this.query)) {
+        return Observable.of(this.sortAlbums(this.spotifyAlbums.albums, query));
+      }
+
+      if (query.offset === 0) {
+        this.spotifyAlbums = new SpotifyAlbums(0, []);
+      }
+
+      this.query = query;
+      const url = this._getSearchUrl(query);
+      
+      return this._getAlbums(url)
+                  .map(
+                    response => {
+                      this.spotifyAlbums.total = response.total;
+                      if (response.total === 0) {
+                          return Observable.of(new Array<SpotifyAlbum>());
+                      }    
+                      if (response.albums.length > 0) {
+                        response.albums.forEach(album => {
+                          let tracks: Track[] = [];
+                          album.tracks.items.forEach(track => {
+                            tracks.push(new Track(track.id, track.name, this.getUnsanitisedUrl(track.uri), "", "", "", "", ""));
+                          });
+                          this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.releaseDate, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
+                        });
+                        if (this._totalLessThanSortThreshold()) {
+                          return this.sortAlbums(this.spotifyAlbums.albums, query); 
+                        } else {
+                          return this.spotifyAlbums.albums;
+                        }
+                      }
+                    }
+                  );
+    }
+
+    getArtistAlbums(query: ArtistSearchQuery): Observable<SpotifyAlbum[]> {
+      if (query.offset === 0) {
+        this.spotifyAlbums = new SpotifyAlbums(0, []);
+      }
+
+      const url = this._getArtistAlbumsUrl(query);
+      return this._getAlbums(url)
+                  .map(
+                      response => {
+                        this.spotifyAlbums.total = response.total;
+                        
+                        if (response.total === 0) {
+                            return Observable.of(new Array<SpotifyAlbum>());
+                        }
+
+                        if (response.albums.length > 0) {
+                            response.albums.forEach(album => {
                                 let tracks: Track[] = [];
                                 album.tracks.items.forEach(track => {
                                     tracks.push(new Track(track.id, track.name, this.getUnsanitisedUrl(track.uri), "", "", "", "", ""));
                                 });
-                                this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.release_date, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
+                                this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.releaseDate, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
                             });
                             return this.spotifyAlbums.albums;
-                            // .sort((a, b) => {
-                            //     return +b.popularity - +a.popularity;
-                            // });
                         }
-                    }
-                );
-            })
-            .concatAll();
+                      }
+                  );
     }
 
-    getAlbumIds(query: SearchQuery): Observable<SpotifyAlbums> {
-        let term = query.query;
-        if (!term || term.length < 2) {
-            term = "";
-        }
-        let label = query.label;
-        if (!label || label.length < 2) {
-            label = "";
-        }
-        let year = query.year;
-        if (!year || year.length < 2) {
-            year = "";
-        }
-        const url = `${this.spotifyUrl}search?query=${term}&label=${label}&year=${year}&offset=${query.offset}&limit=${this.perPage}`;
-
-        return this.http.get(url)
-            .map<Response, SpotifyAlbums | any>(this.extractAlbumIdData)
-            .catch<any, SpotifyAlbums>(this.handleError);
-    }
     getArtistAlbumIds(query: ArtistSearchQuery): Observable<SpotifyAlbums> {
-        return this.http.get(this.spotifyUrl + "artistalbums?artistId=" + query.id + '&offset=' + query.offset + '&limit=' + this.perPage)
-            .map<Response, SpotifyAlbums>(this.extractArtistAlbumIdData)
-            .catch<any, SpotifyAlbums>(this.handleError);
-    }
-    private extractArtistAlbumIdData(response: Response): SpotifyAlbum | any {
-        let body = response.json();
-        return new SpotifyAlbums(body.total, body.items) || {};
-    }
-    private handleAlbumIdError(error: any) {
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - $(error.statusText)` : "Server error";
-        return Observable.throw(errMsg);
+        return this.http.get(`${this.spotifyUrl}artistalbums?artistId=${query.id}&offset=${query.offset}&limit=${this.perPage}`)
+                        .map<Response, SpotifyAlbums | {}>(this.extractResponse)
+                        .catch<any, SpotifyAlbums>(this.handleError);
     }
 
-    private extractAlbumIdData(response: Response): SpotifyAlbums | {} {
-        let body = response.json();
-        return new SpotifyAlbums(body.albums.total, body.albums.items) || {};
-    }
-
-    getAlbumsByIds(albumIds: Array<string>): Observable<SpotifyAlbum[]> {
-        let params = new URLSearchParams();
-        params.set("albumIds", albumIds.join(","));
-
-        return this.http.get(this.spotifyUrl + "albums/", { search: params })
-            .map<Response, SpotifyAlbum[]>(this.extractAlbumData)
-            .catch<any, SpotifyAlbum[]>(this.handleError);
-    }
-
-    private extractAlbumData(response: Response) {
-        let body = response.json();
-        return body.albums || {};
-    }
-
-    private handleError(error: any) {
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - $(error.statusText)` : "Server error";
-        console.log(errMsg);
-        return Observable.throw(errMsg);
-    }
-    
-    getArtistAlbums(query: ArtistSearchQuery): Observable<SpotifyAlbum[]> {
-        if (query.offset === 0) {
-             this.spotifyAlbums = new SpotifyAlbums(0, []);
-        }
-        return this.getArtistAlbumIds(query)
-            .map(albumIds => {
-                this.spotifyAlbums.total = albumIds.total;
-                if (albumIds.total === 0) {
-                    return Observable.of(new Array<SpotifyAlbum>());
-                }
-                return this.getAlbumsByIds(albumIds.albums.map(album => album.id))
-                .map(
-                    albums => {
-                        if (albums.length > 0) {
-                            albums.forEach(album => {
-                                let tracks: Track[] = [];
-                                album.tracks.items.forEach(track => {
-                                    tracks.push(new Track(track.id, track.name, track.uri, "", "", "", "", ""));
-                                });
-                                this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.release_date, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
-                            });
-                            return this.spotifyAlbums.albums;
-                        }
-                    }
-                );
-            })
-            .concatAll();
-    }
     updateAlbum(spotifyAlbum: SpotifyAlbum, albumResult: Album[]){
         spotifyAlbum.tracksLoaded = true;
         if (albumResult && albumResult.length > 0) {
@@ -165,6 +128,71 @@ export class SpotifyService {
             .catch<any, Artist>(this.handleError);
     }
 
+    private _areSameQuery(current: SearchQuery, previous: SearchQuery) {
+      return !!previous && previous.label === current.label &&
+                          previous.offset === current.offset &&
+                          previous.query === current.query &&
+                          previous.year === current.year
+    }
+
+    private _getSearchUrl(query: SearchQuery): string {
+      let term = query.query;
+      if (!term || term.length < 2) {
+        term = "";
+      }
+      let label = query.label;
+      if (!label || label.length < 2) {
+        label = "";
+      }
+      let year = query.year;
+      if (!year || year.length < 2) {
+        year = "";
+      }
+      return `${this.spotifyUrl}search?query=${term}&label=${label}&year=${year}&offset=${query.offset}&limit=${this.perPage}`;
+    }
+
+    private _getArtistAlbumsUrl(query: ArtistSearchQuery): string {
+      return `${this.spotifyUrl}artistalbums?artistId=${query.id}&offset=${query.offset}&limit=${this.perPage}`;
+    }
+
+    private _getAlbums(url: string): Observable<SpotifyAlbums> {
+      return this.http.get(url)
+                      .map<Response, SpotifyAlbums | {}>(this.extractResponse)
+                      .catch<any, SpotifyAlbums>(this.handleError); 
+    }
+
+    private sortAlbums(albums: SpotifyAlbum[], query: SearchQuery): SpotifyAlbum[] {
+      if (+query.sortOrder === 1) {
+        return albums.sort((a, b) => {
+          if (+query.sortDirection === 1) {
+            return +b.popularity - +a.popularity;
+          } else {
+            return +a.popularity - +b.popularity;
+          }
+        });
+      } else {
+        return albums.sort((a, b) => {
+          if (+query.sortDirection === 1) {
+            return +new Date(b.releaseDate) - +new Date(a.releaseDate);
+          } else {
+            return +new Date(a.releaseDate) - +new Date(b.releaseDate);
+          }
+        });
+      }
+    }
+
+    private extractResponse(response: Response): SpotifyAlbums | {} {
+      let body = response.json();
+        return body || {};
+    }
+
+    private handleError(error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - $(error.statusText)` : "Server error";
+        console.log(errMsg);
+        return Observable.throw(errMsg);
+    }
+    
     private extractArtistData(response: Response): Artist | any {
         let artist = response.json();
         if (!!artist) {

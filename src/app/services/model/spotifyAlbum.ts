@@ -21,7 +21,7 @@ export class SpotifyAlbum {
         public name: string,
         public recordings: Track[],
         public artists: SpotifyArtist[],
-        public release_date: string,
+        public releaseDate: string,
         public images: SpotifyImage[],
         public copyrights: SpotifyCopyright[],
         public popularity: string,
