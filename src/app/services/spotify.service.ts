@@ -19,8 +19,8 @@ import { ArtistSearchQuery } from "./model/artistSearchQuery";
 @Injectable()
 export class SpotifyService {
     constructor(private http: Http, private sanitiser: DomSanitizer) {}
-    private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; 
-    // private spotifyUrl = "http://sounds-api-dev.azurewebsites.net/api/spotify/"; 
+    // private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; 
+    private spotifyUrl = "http://sounds-api-dev.azurewebsites.net/api/spotify/"; 
     // private spotifyUrl = "http://qt-api.tristanchanning.com:8070/api/spotify/";
     // private spotifyUrl = 'https://soundsapi-gcojuilvsi.now.sh/api/spotify/';
     // private spotifyUrl = "http://localhost:5000/api/spotify/";
@@ -33,13 +33,13 @@ export class SpotifyService {
       return this.spotifyAlbums.total;
     }
 
-    private _totalLessThanSortThreshold(){
+    public canSort(){
       return this.getTotal() <= this.sortThreshold;
     }
 
     getAlbums(query: SearchQuery): Observable<SpotifyAlbum[]> {
-      if (this._totalLessThanSortThreshold() && this._areSameQuery(query, this.query)) {
-        return Observable.of(this.sortAlbums(this.spotifyAlbums.albums, query));
+      if (this.canSort() && this._areSameQuery(query, this.query)) {
+        return Observable.of(this._sortAlbums(+query.sortOrder, +query.sortDirection));
       }
 
       if (query.offset === 0) {
@@ -64,11 +64,7 @@ export class SpotifyService {
                           });
                           this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.releaseDate, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
                         });
-                        if (this._totalLessThanSortThreshold()) {
-                          return this.sortAlbums(this.spotifyAlbums.albums, query); 
-                        } else {
-                          return this.spotifyAlbums.albums;
-                        }
+                        return this._getSortedAlbums(+query.sortOrder, +query.sortDirection);
                       }
                     }
                   );
@@ -107,21 +103,6 @@ export class SpotifyService {
         return this.http.get(`${this.spotifyUrl}artistalbums?artistId=${query.id}&offset=${query.offset}&limit=${this.perPage}`)
                         .map<Response, SpotifyAlbums | {}>(this.extractResponse)
                         .catch<any, SpotifyAlbums>(this.handleError);
-    }
-
-    updateAlbum(spotifyAlbum: SpotifyAlbum, albumResult: Album[]){
-        spotifyAlbum.tracksLoaded = true;
-        if (albumResult && albumResult.length > 0) {
-            let tracks = albumResult[0].Tracks;
-            spotifyAlbum.recordings.forEach(spotifyTrack => {
-                tracks.forEach(track => {
-                    if (track.SpotifyId === spotifyTrack.Id || track.Title.toLowerCase() === spotifyTrack.Title.toLowerCase()) {
-                    spotifyTrack.Bpm = track.Bpm;
-                    spotifyTrack.Duration = track.Duration;
-                    }
-                });
-            });
-        }
     }
 
     getArtist(id: string): Observable<Artist> {
@@ -163,18 +144,26 @@ export class SpotifyService {
                       .catch<any, SpotifyAlbums>(this.handleError); 
     }
 
-    private sortAlbums(albums: SpotifyAlbum[], query: SearchQuery): SpotifyAlbum[] {
-      if (+query.sortOrder === 1) {
-        return albums.sort((a, b) => {
-          if (+query.sortDirection === 1) {
+    private _getSortedAlbums (sortOrder: number, sortDirection: number): SpotifyAlbum[] {
+      if (this.canSort()) {
+        return this._sortAlbums(sortOrder, sortDirection); 
+      } else {
+        return this.spotifyAlbums.albums;
+      }
+    }
+
+    private _sortAlbums(sortOrder: number, sortDirection: number): SpotifyAlbum[] {
+      if (sortOrder === 1) {
+        return this.spotifyAlbums.albums.sort((a, b) => {
+          if (sortDirection === 1) {
             return +b.popularity - +a.popularity;
           } else {
             return +a.popularity - +b.popularity;
           }
         });
       } else {
-        return albums.sort((a, b) => {
-          if (+query.sortDirection === 1) {
+        return this.spotifyAlbums.albums.sort((a, b) => {
+          if (sortDirection === 1) {
             return +new Date(b.releaseDate) - +new Date(a.releaseDate);
           } else {
             return +new Date(a.releaseDate) - +new Date(b.releaseDate);

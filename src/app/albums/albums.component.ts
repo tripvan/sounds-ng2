@@ -62,7 +62,11 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     public state: string = 'inactive';
     public noResultsState: string = 'inactive';
     public isLoading: boolean = false;
-
+    public sortOrderText: string = 'Popularity';
+    public sortOrder: number = 1;
+    public sortDirectionText: string = 'Desc';
+    public sortDirection: number = 1;
+    
   ngOnInit() {
       this.sub = this.router.routerState.root.queryParams
       .subscribe(params => {
@@ -142,5 +146,31 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   recordsHaveEnded() {
       return this.spotifyService.getTotal() < this.query.offset;
+  }
+
+  public canSort() {
+    return this.spotifyService.canSort();
+  }
+  
+  public toggleSortOrder() {
+    if (this.sortOrder === 1) {
+      this.sortOrderText = 'Date';
+      this.sortOrder = 2
+    } else {
+      this.sortOrderText = 'Popularity';
+      this.sortOrder = 1
+    }
+    this.router.navigate(["/search"], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
+  }
+
+  public toggleSortDirection() {
+    if (this.sortDirection === 1) {
+      this.sortDirectionText = 'Asc';
+      this.sortDirection = 2
+    } else {
+      this.sortDirectionText = 'Desc';
+      this.sortDirection = 1
+    }
+    this.router.navigate(["/search"], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
   }
 }

@@ -114,13 +114,6 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
   }
 
   showTracks(album: SpotifyAlbum) {
-      if (!album.showTracks && !album.tracksLoaded) {
-        this.quantoneService.getAlbum(album.id)
-        .subscribe(
-            albumResult => this.spotifyService.updateAlbum(album, albumResult),
-            error => this.errorMessage = <any>error
-        );
-      }
       album.showTracks = !album.showTracks;
   }
 

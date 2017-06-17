@@ -2,6 +2,11 @@
     <span *ngIf="query.query.trim().length > 0 && query.label.trim().length > 0"> on </span> 
     <span *ngIf="query.label.trim().length > 0">"{{query.label}}"</span>
     <span *ngIf="query.year.trim().length > 0"> {{query.year}}</span>
+    
+    <div class="headeritem-reveal-container" *ngIf="canSort() && !isLoading">
+        <li class="headeritem headeritem-reveal" (click)="toggleSortOrder()">{{sortOrderText}}</li>
+        <li class="headeritem headeritem-reveal" (click)="toggleSortDirection()">{{sortDirectionText}}</li>
+    </div>
 </div>
 <tc-loader [isHidden]="!isLoading"></tc-loader>
 <div infinite-scroll (scroll)="onScroll()" [@albumState]="state">
