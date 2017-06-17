@@ -6,15 +6,14 @@ import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/from';
 
+import { environment } from './../../environments/environment.prod';
 import { Artist } from './model/artist';
 import { Album } from './model/album';
 
 @Injectable()
 export class QuantoneService {
     constructor(private http: Http) {}
-    private baseUrl: string = 'http://sounds-api.azurewebsites.net/api/quantone/';
-    // private baseUrl: string = 'http://sounds-api-dev.azurewebsites.net/api/quantone/';
-    // private baseUrl: string = 'http://localhost:5000/api/quantone/';
+    private baseUrl: string = `${environment.apiUrl}quantone/`;
     getArtist(artistId): Observable<Artist[]>  {
         return this.http.get(this.baseUrl +  'artist/' + artistId)
                     .map<Response, Artist[]>(this.extractData)

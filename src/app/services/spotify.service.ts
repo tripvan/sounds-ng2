@@ -7,6 +7,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import { environment } from './../../environments/environment';
 import { Artist } from "./model/artist";
 import { Album } from "./model/album";
 import { SpotifyArtist } from "./model/spotifyArtist";
@@ -19,8 +20,8 @@ import { ArtistSearchQuery } from "./model/artistSearchQuery";
 @Injectable()
 export class SpotifyService {
     constructor(private http: Http, private sanitiser: DomSanitizer) {}
+    private spotifyUrl = `${environment.apiUrl}spotify/`; 
     // private spotifyUrl = "http://sounds-api.azurewebsites.net/api/spotify/"; 
-    private spotifyUrl = "http://sounds-api-dev.azurewebsites.net/api/spotify/"; 
     // private spotifyUrl = "http://qt-api.tristanchanning.com:8070/api/spotify/";
     // private spotifyUrl = 'https://soundsapi-gcojuilvsi.now.sh/api/spotify/';
     // private spotifyUrl = "http://localhost:5000/api/spotify/";
