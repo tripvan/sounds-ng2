@@ -8,9 +8,9 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 3000",
-    "build": "ng build --prod --environment=prod",
-    "build:dev": "ng build --prod --environment=dev",
+    "start": "ng serve --port 3000 --env=local",
+    "build": "ng build --prod --env=prod",
+    "build:dev": "ng build --env=dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
