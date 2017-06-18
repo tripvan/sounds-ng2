@@ -22,15 +22,7 @@ import { SpotifyAlbum } from '../../services/model/spotifyAlbum';
       })),
       state('true', style({
         opacity: 1
-      })),
-      // transition('* => true', [ 
-      //     style({ opacity: 0 }), 
-      //     animate('100ms ease-in')
-      // ]),
-      // transition('true => *', [
-      //     style({opacity: 0}), 
-      //     animate(10)
-      // ])
+      }))
     ])
   ]
 })

@@ -1,10 +1,10 @@
 import { SafeUrl } from '@angular/platform-browser';
 
-import { Track } from "./track";
-import { Tracks } from "./spotifyTracks";
-import { SpotifyArtist } from "./spotifyArtist";
-import { SpotifyImage } from "./spotifyImage";
-import { SpotifyCopyright } from "./spotifyCopyright";
+import { Track } from './track';
+import { Tracks } from './spotifyTracks';
+import { SpotifyArtist } from './spotifyArtist';
+import { SpotifyImage } from './spotifyImage';
+import { SpotifyCopyright } from './spotifyCopyright';
 
 export class SpotifyAlbum {
     public tracks: Tracks;
@@ -33,7 +33,7 @@ export class SpotifyAlbum {
 
         private _getPopularity(popularity: string) {
           let popularityNumber = +popularity / 10;
-          // i.e. styling goes mental with these values. 
+          // i.e. styling goes mental with these values.
           if (popularityNumber === 0) {
             return 0.1;
           }

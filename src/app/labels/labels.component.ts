@@ -9,9 +9,9 @@ import { LabelService } from '../services/label.service';
 })
 export class LabelsComponent implements OnInit {
     constructor(private labelService: LabelService) {}
-    labels: Label[]
+    labels: Label[];
 
     ngOnInit() {
-        this.labels = this.labelService.getAllLabels() // todo observable
+        this.labels = this.labelService.getAllLabels(); // todo observable
     }
 }

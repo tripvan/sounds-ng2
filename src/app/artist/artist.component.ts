@@ -4,15 +4,15 @@ import { Component, OnInit, ViewChild,
   style,
   transition,
   animate } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/concatMap';
 
-import { SpotifyService } from "../services/spotify.service";
-import { QuantoneService } from "../services/quantone.service";
+import { SpotifyService } from '../services/spotify.service';
+import { QuantoneService } from '../services/quantone.service';
 import { Artist } from '../services/model/artist';
 
 import { ArtistAlbumsComponent } from './artist-albums.component';
@@ -107,10 +107,10 @@ export class ArtistComponent implements OnInit {
   }
 
   _getParam(param: any) {
-    if (!!param && param !== "true") {
+    if (!!param && param !== 'true') {
         return param;
     }
-    return " ";
+    return ' ';
   }
 
   toggleBio() {

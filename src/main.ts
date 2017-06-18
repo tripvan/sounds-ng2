@@ -1,4 +1,4 @@
-require("bootstrap/less/bootstrap.less");
+require('bootstrap/less/bootstrap.less');
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';

@@ -66,7 +66,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     public sortOrder: number = 1;
     public sortDirectionText: string = 'Desc';
     public sortDirection: number = 1;
-    
+
   ngOnInit() {
       this.sub = this.router.routerState.root.queryParams
       .subscribe(params => {
@@ -84,7 +84,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       error => console.log(error));
   }
 
-  _getSearchQueryFromParams(params: Params){
+  _getSearchQueryFromParams(params: Params) {
     return new SearchQuery(this._getParam(params['query']), this._getParam(params['label']), this._getParam(params['year']), 0, this._getParam(params['sortOrder']), this._getParam(params['sortDirection']));
   }
 
@@ -95,11 +95,11 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     return ' ';
   }
 
-  _noSearchQueryStream(){
+  _noSearchQueryStream() {
     return !!this.searchQueryStream === false;
   }
-  
-  _initSearchQueryStream(){
+
+  _initSearchQueryStream() {
     this.searchQueryStream = new BehaviorSubject<SearchQuery>(this.query);
     this.albums = this.searchQueryStream
         .filter(search => !!search && (search.query.length > 2 || search.label.length > 2))
@@ -116,7 +116,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
                     this.query.scrolling = false;
                     if (albums.length === 0) {
                         this.noResultsSubscription = this.noResultsTimer.subscribe(() => {
-                          this.noResultsState = 'active'
+                          this.noResultsState = 'active';
                         });
                     }
                     this.setTitle();
@@ -126,7 +126,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   }
 
   private setTitle() {
-    this.titleService.setTitle(`${this.query.query.trim().length > 0 ? this.query.query : ""} ${this.query.query.trim().length > 0 && this.query.label.trim().length > 0 ? " on" : ""} ${this.query.label.trim().length > 0 ? this.query.label : ""} ${this.query.year.trim().length > 0 ? this.query.year : ""}`);
+    this.titleService.setTitle(`${this.query.query.trim().length > 0 ? this.query.query : ''} ${this.query.query.trim().length > 0 && this.query.label.trim().length > 0 ? ' on' : ''} ${this.query.label.trim().length > 0 ? this.query.label : ''} ${this.query.year.trim().length > 0 ? this.query.year : ''}`);
   }
 
   onScroll() {
@@ -151,26 +151,26 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   public canSort() {
     return this.spotifyService.canSort();
   }
-  
+
   public toggleSortOrder() {
     if (this.sortOrder === 1) {
       this.sortOrderText = 'Date';
-      this.sortOrder = 2
+      this.sortOrder = 2;
     } else {
       this.sortOrderText = 'Popularity';
-      this.sortOrder = 1
+      this.sortOrder = 1;
     }
-    this.router.navigate(["/search"], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
+    this.router.navigate(['/search'], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
   }
 
   public toggleSortDirection() {
     if (this.sortDirection === 1) {
       this.sortDirectionText = 'Asc';
-      this.sortDirection = 2
+      this.sortDirection = 2;
     } else {
       this.sortDirectionText = 'Desc';
-      this.sortDirection = 1
+      this.sortDirection = 1;
     }
-    this.router.navigate(["/search"], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
+    this.router.navigate(['/search'], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
   }
 }

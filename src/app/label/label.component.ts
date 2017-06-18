@@ -10,4 +10,4 @@ import { Label } from '../services/model/label';
 export class LabelComponent {
     @Input()
     public label: Label;
-}                                                                                                                                                                                                  
+}

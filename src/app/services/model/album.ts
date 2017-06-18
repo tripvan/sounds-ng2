@@ -1,4 +1,4 @@
-import { Track } from "./track";
+import { Track } from './track';
 // todo create from spotifyAlbum
 // play urls? e.g. youtube, tidal, etc. maybe just ids
 // and helpers to resolve url from id

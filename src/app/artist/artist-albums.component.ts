@@ -3,20 +3,20 @@ import { Component, Input, OnInit, OnDestroy,
   state,
   style,
   transition,
-  animate } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+  animate } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { Observable } from "rxjs/Observable";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { ArtistSearchQuery } from "../services/model/artistSearchQuery";
-import { SpotifyAlbum } from "../services/model/spotifyAlbum";
-import { QuantoneService } from "../services/quantone.service";
-import { SpotifyService } from "../services/spotify.service";
+import { ArtistSearchQuery } from '../services/model/artistSearchQuery';
+import { SpotifyAlbum } from '../services/model/spotifyAlbum';
+import { QuantoneService } from '../services/quantone.service';
+import { SpotifyService } from '../services/spotify.service';
 
 @Component({
-    selector: "tc-artist-albums",
-    templateUrl: "./artist-albums.component.html",
+    selector: 'tc-artist-albums',
+    templateUrl: './artist-albums.component.html',
     animations: [
         trigger('albumState', [
             state('inactive', style({
@@ -61,7 +61,7 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
         .route
         .params
         .subscribe(params => {
-            let query = new ArtistSearchQuery(this._getParam(params["id"]), 0);
+            let query = new ArtistSearchQuery(this._getParam(params['id']), 0);
             this.query = query;
             if (!!this.searchQueryStream === false) {
                 this.searchQueryStream = new BehaviorSubject<ArtistSearchQuery>(this.query);
@@ -88,10 +88,10 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
         error => console.log(error));
   }
   _getParam(param: any) {
-      if (!!param && param !== "true") {
+      if (!!param && param !== 'true') {
           return param;
       }
-      return " ";
+      return ' ';
   }
   showAlbums() {
       this.canShowAlbums = true;
@@ -102,7 +102,7 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
   onScroll() {
     this.query.offset += this.spotifyService.perPage;
     if (this.query.offset >= this.spotifyService.getTotal()) {
-        console.log("no more results");
+        console.log('no more results');
         return;
     }
     this.query.scrolling = true;

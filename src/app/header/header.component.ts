@@ -4,16 +4,16 @@ import { Component, OnInit,
   style,
   transition,
   animate } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import { Subject } from "rxjs/Subject";
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { SearchQuery } from "../services/model/searchQuery";
-import { YearsService } from "../services/years.service";
+import { SearchQuery } from '../services/model/searchQuery';
+import { YearsService } from '../services/years.service';
 import { LabelService } from '../services/label.service';
 import { Label } from '../services/model/label';
 
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
 
   public years: any[];
   public yearsRange: any[];
-  public year: string = "";
+  public year: string = '';
   public query: string;
   public labels: Label[];
   public label: string;
@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
   public sortOrder: number = 1;
   public sortDirectionText: string = 'Desc';
   public sortDirection: number = 1;
-  
+
   freeTextSearchQuery: Observable<SearchQuery> = this.freeTextSearchQueryStream
     .debounceTime(this.debounceTime)
     .distinctUntilChanged();
@@ -83,7 +83,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private _navigateToAlbums(search: SearchQuery) {
-      this.router.navigate(["/search"], { queryParams: { query: search.query, label: search.label, year: search.year, sortOrder: search.sortOrder, sortDirection: search.sortDirection } });
+      this.router.navigate(['/search'], { queryParams: { query: search.query, label: search.label, year: search.year, sortOrder: search.sortOrder, sortDirection: search.sortDirection } });
   }
 
   private _initSearchLists() {
@@ -97,21 +97,21 @@ export class HeaderComponent implements OnInit {
       .root
       .queryParams
       .subscribe(params => {
-        this.label = this._getParam(params["label"]);
-        this.query = this._getParam(params["query"]);
-        this.year = this._getParam(params["year"]);
-        this.sortOrder = +this._getParam(params["sortOrder"]) ? +this._getParam(params["sortOrder"]) : 1;
-        this.sortDirection = +this._getParam(params["sortDirection"]) ? +this._getParam(params["sortDirection"]) : 1; 
+        this.label = this._getParam(params['label']);
+        this.query = this._getParam(params['query']);
+        this.year = this._getParam(params['year']);
+        this.sortOrder = +this._getParam(params['sortOrder']) ? +this._getParam(params['sortOrder']) : 1;
+        this.sortDirection = +this._getParam(params['sortDirection']) ? +this._getParam(params['sortDirection']) : 1;
     });
   }
 
   private _getParam(param: any) {
-    if(param === undefined){
+    if (param === undefined) {
       return '';
     }
 
     let result: string = param;
-    if (result !== "true") {
+    if (result !== 'true') {
       return decodeURI(result);
     }
 
@@ -140,7 +140,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private _searchBy(propName: string, value: string, isFreeTextSearch: boolean) {
-    if (this[propName] === value.toString()) value = ""; // deselect when selected. even though string type comes in as number...
+    if (this[propName] === value.toString()) value = ''; // deselect when selected. even though string type comes in as number...
     this[propName] = value;
     this.search(isFreeTextSearch);
   }
@@ -153,27 +153,5 @@ export class HeaderComponent implements OnInit {
   public toggleLabels() {
     this.showLabels = !this.showLabels;
     this.showYears = false;
-  }
-  
-  public toggleSortOrder() {
-    if (this.sortOrder === 1) {
-      this.sortOrderText = 'Date';
-      this.sortOrder = 2
-    } else {
-      this.sortOrderText = 'Popularity';
-      this.sortOrder = 1
-    }
-    this.search(false);
-  }
-
-  public toggleSortDirection() {
-    if (this.sortDirection === 1) {
-      this.sortDirectionText = 'Asc';
-      this.sortDirection = 2
-    } else {
-      this.sortDirectionText = 'Desc';
-      this.sortDirection = 1
-    }
-    this.search(false);
   }
 }

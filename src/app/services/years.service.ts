@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class YearsService {
@@ -19,7 +19,7 @@ export class YearsService {
         while (currentYear > 1940) {
             let decade = Math.floor(currentYear / 10) * 10;
             let fromDecade = decade - 10;
-            years.push(fromDecade + "-" + decade);
+            years.push(fromDecade + '-' + decade);
             currentYear = currentYear - 10;
         }
         return years;

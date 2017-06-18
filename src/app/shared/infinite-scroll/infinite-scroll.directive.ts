@@ -1,14 +1,14 @@
-import { Directive, HostListener, EventEmitter, Output, OnInit, OnDestroy } from "@angular/core";
+import { Directive, HostListener, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 
-import { Subject } from "rxjs/Subject";
-import { Observable } from "rxjs/Observable";
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 const distanceFromBottomThreshold: number = 500;
 const minDistanceFromBottom: number = 120;
 
 @Directive({
-    selector: "[infinite-scroll]",
+    selector: '[tcInfiniteScroll]',
 })
-export class InfiniteScrollComponent implements OnInit, OnDestroy {
+export class InfiniteScrollDirective implements OnInit, OnDestroy {
     private scrollStream = new Subject();
     private lowestDistanceFromBottom: number = distanceFromBottomThreshold;
     private scrollObservable = this.scrollStream
@@ -25,7 +25,7 @@ export class InfiniteScrollComponent implements OnInit, OnDestroy {
             }
         });
     @Output() scroll = new EventEmitter();
-    @HostListener("window:scroll", ["$event"])
+    @HostListener('window:scroll', ['$event'])
     onScrolled(event) {
         this.scrollStream.next({});
     }

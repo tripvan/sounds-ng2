@@ -6,7 +6,7 @@ export class Artist {
     getImageUrl() {
         let imageUrl = '';
         let currentHeight = 0;
-        if(!!this.Images && this.Images.length > 0) {
+        if (!!this.Images && this.Images.length > 0) {
             // let filteredImages = this.Images.filter(image => {
             //     // if(image.height > currentHeight && image.height - 160 )
             //     return image.width < 700;
