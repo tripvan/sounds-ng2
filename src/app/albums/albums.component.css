@@ -19,7 +19,12 @@
 .headeritem-reveal-container {
     display: inline-flex;
     float: right;
-    font-size: 0.5em;   
+    font-size: 0.5em;
+    margin: 5px 0;
+}
+
+.clear-both {
+  clear: both;
 }
 
 .headeritem-reveal {

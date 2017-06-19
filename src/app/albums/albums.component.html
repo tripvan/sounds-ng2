@@ -4,12 +4,14 @@
     <span *ngIf="query.year.trim().length > 0"> {{query.year}}</span>
     
     <div class="headeritem-reveal-container" *ngIf="canSort() && !isLoading">
+      <ul>
         <li class="headeritem headeritem-reveal" (click)="toggleSortOrder()">{{sortOrderText}}</li>
         <li class="headeritem headeritem-reveal" (click)="toggleSortDirection()">{{sortDirectionText}}</li>
+      </ul>
     </div>
 </div>
 <tc-loader [isHidden]="!isLoading"></tc-loader>
-<div tcInfiniteScroll (scroll)="onScroll()" [@albumState]="state">
+<div tcInfiniteScroll class="clear-both" (scroll)="onScroll()" [@albumState]="state">
     <tc-album *ngFor="let album of albums | async" 
             [@albumState]="album.state" [album]="album">
     </tc-album>
