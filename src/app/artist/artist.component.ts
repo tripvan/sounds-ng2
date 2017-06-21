@@ -46,7 +46,8 @@ import { ArtistAlbumsComponent } from './artist-albums.component';
   ]
 })
 export class ArtistComponent implements OnInit {
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+      private route: ActivatedRoute,
       private titleService: Title,
       private spotifyService: SpotifyService,
       private quantoneService: QuantoneService) {}
@@ -54,6 +55,7 @@ export class ArtistComponent implements OnInit {
   private sub: any;
   private searchQueryStream: BehaviorSubject<string>;
   private artistId: string;
+  private previousArtistId: string;
   @ViewChild(ArtistAlbumsComponent)
   private artistAlbumsComponent: ArtistAlbumsComponent;
 
@@ -66,41 +68,41 @@ export class ArtistComponent implements OnInit {
 
   ngOnInit() {
       let self = this;
-      this.sub = this
-          .route
-          .params
+      this.sub = this.router.routerState.root.queryParams
           .subscribe(params => {
               self.artistId = params['id'];
-              if (!!self.searchQueryStream === false) {
-                  self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
-                  self.searchQueryStream
-                  .concatMap<string, Artist>((id: string) => {
-                      return self.spotifyService.getArtist(id)
-                              .concatMap(artist => {
-                                  self.artist = artist;
-                                  this.titleService.setTitle(artist.Name);
-                                  this.imageState = 'active';
-                                  this.artistAlbumsComponent.showAlbums();
+              if (self.previousArtistId !== self.artistId) {
+                if (!!self.searchQueryStream === false) {
+                    self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
+                    self.searchQueryStream
+                    .concatMap<string, Artist>((id: string) => {
+                        return self.spotifyService.getArtist(id)
+                                .concatMap(artist => {
+                                      self.artist = artist;
+                                      this.titleService.setTitle(artist.Name);
+                                      this.imageState = 'active';
+                                      this.artistAlbumsComponent.showAlbums();
+                                      return this.quantoneService
+                                            .getArtist(artist.Id)
+                                            .map(quantoneArtist => {
+                                                if (!!quantoneArtist && quantoneArtist.length > 0) {
+                                                    this.hasBio = !!quantoneArtist[0].bio;
+                                                    artist.bio = quantoneArtist[0].bio || `${artist.Name}'s bio is yet to be written.`;
 
-                                  return this.quantoneService
-                                          .getArtist(artist.Id)
-                                          .map(quantoneArtist => {
-                                              if (!!quantoneArtist && quantoneArtist.length > 0) {
-                                                  this.hasBio = !!quantoneArtist[0].bio;
-                                                  artist.bio = quantoneArtist[0].bio || `${artist.Name}'s bio is yet to be written.`;
-
-                                                  this.bioState = 'active';
-                                              }
-                                              return artist;
-                                          });
-                              });
-                  })
-                  .subscribe(artist => {
+                                                    this.bioState = 'active';
+                                                }
+                                                self.previousArtistId = self.artistId;
+                                                return artist;
+                                            });
+                                });
+                    })
+                    .subscribe(artist => {
                       self.artist = artist;
-                  });
+                    });
 
-              } else {
-                  self.searchQueryStream.next(self.artistId);
+                } else {
+                    self.searchQueryStream.next(self.artistId);
+                }
               }
           },
           error => console.log(error));

@@ -23,6 +23,7 @@ export class SpotifyService {
     private spotifyUrl = `${environment.apiUrl}spotify/`;
     private spotifyAlbums: SpotifyAlbums = new SpotifyAlbums(0, []);
     private query: SearchQuery;
+    private artistQuery: ArtistSearchQuery;
     private sortThreshold: number = 50;
     public perPage: number = 50;
 
@@ -31,7 +32,7 @@ export class SpotifyService {
     }
 
     public canSort() {
-      return this.getTotal() <= this.sortThreshold;
+      return this.getTotal() > 0 && this.getTotal() <= this.sortThreshold;
     }
 
     getAlbums(query: SearchQuery): Observable<SpotifyAlbum[]> {
@@ -68,10 +69,15 @@ export class SpotifyService {
     }
 
     getArtistAlbums(query: ArtistSearchQuery): Observable<SpotifyAlbum[]> {
+      if (this.canSort() && this._areSameArtistQuery(query, this.artistQuery)) {
+        return Observable.of(this._sortAlbums(+query.sortOrder, +query.sortDirection));
+      }
+
       if (query.offset === 0) {
         this.spotifyAlbums = new SpotifyAlbums(0, []);
       }
 
+      this.artistQuery = query;
       const url = this._getArtistAlbumsUrl(query);
       return this._getAlbums(url)
                   .map(
@@ -115,6 +121,10 @@ export class SpotifyService {
                           previous.year === current.year;
     }
 
+    private _areSameArtistQuery(current: ArtistSearchQuery, previous: ArtistSearchQuery) {
+      return !!previous && previous.id === current.id &&
+                          previous.offset === current.offset;
+    }
     private _getSearchUrl(query: SearchQuery): string {
       let term = query.query;
       if (!term || term.length < 2) {

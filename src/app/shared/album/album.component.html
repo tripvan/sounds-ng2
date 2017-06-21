@@ -3,7 +3,7 @@
     <div fxFlex fxLayoutWrap class="truncate">
       <a fxFlex="grow" [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
       <div class="listitem-small artist" *ngFor="let artist of album.artists; let last=last">
-          <a class="truncate" routerLink="/artist/{{artist.id}}">{{artist.name}}</a>
+          <a class="truncate" [routerLink]="['/artist']" [queryParams]="{id: artist.id}">{{artist.name}}</a>
           <span class="seperator" *ngIf="!last"> | </span>
           <br *ngIf="last" />
       </div>

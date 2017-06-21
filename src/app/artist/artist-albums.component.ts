@@ -17,6 +17,7 @@ import { SpotifyService } from '../services/spotify.service';
 @Component({
     selector: 'tc-artist-albums',
     templateUrl: './artist-albums.component.html',
+    styleUrls: ['./artist-albums.component.css'],
     animations: [
         trigger('albumState', [
             state('inactive', style({
@@ -55,13 +56,16 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
   public albums: Observable<SpotifyAlbum[]>;
   public state: string = 'inactive';
   public noResultsState: string = 'active';
+  public isLoading: boolean = false;
+  public sortOrderText: string = 'Popularity';
+  public sortOrder: number = 1;
+  public sortDirectionText: string = 'Desc';
+  public sortDirection: number = 1;
 
   ngOnInit() {
-      this.sub = this
-        .route
-        .params
+      this.sub = this.router.routerState.root.queryParams
         .subscribe(params => {
-            let query = new ArtistSearchQuery(this._getParam(params['id']), 0);
+            let query = new ArtistSearchQuery(this._getParam(params['id']), 0, this._getParam(params['sortOrder']), this._getParam(params['sortDirection']));
             this.query = query;
             if (!!this.searchQueryStream === false) {
                 this.searchQueryStream = new BehaviorSubject<ArtistSearchQuery>(this.query);
@@ -70,9 +74,12 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
                     if (this.query.scrolling === false) {
                         this.state = 'inactive';
                     }
+                    this.isLoading = true;
+
                     return this.spotifyService.getArtistAlbums(query)
                         .map((albums: SpotifyAlbum[]) => {
                             this.albumsLoaded = true;
+                            this.isLoading = false;
 
                             if (this.canShowAlbums) {
                                 this.showAlbums();
@@ -125,5 +132,31 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
 
   recordsHaveEnded() {
       return this.spotifyService.getTotal() < this.query.offset;
+  }
+
+  public canSort() {
+    return this.spotifyService.canSort();
+  }
+
+  public toggleSortOrder() {
+    if (this.sortOrder === 1) {
+      this.sortOrderText = 'Date';
+      this.sortOrder = 2;
+    } else {
+      this.sortOrderText = 'Popularity';
+      this.sortOrder = 1;
+    }
+    this.router.navigate(['/artist/'], { queryParams: { id: this.query.id, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
+  }
+
+  public toggleSortDirection() {
+    if (this.sortDirection === 1) {
+      this.sortDirectionText = 'Asc';
+      this.sortDirection = 2;
+    } else {
+      this.sortDirectionText = 'Desc';
+      this.sortDirection = 1;
+    }
+    this.router.navigate(['/artist/'], { queryParams: { id: this.query.id, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
   }
 }
