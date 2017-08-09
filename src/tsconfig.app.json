@@ -11,6 +11,7 @@
   },
   "exclude": [
     "test.ts",
+    "wallabyTest.ts",
     "**/*.spec.ts"
   ]
 }

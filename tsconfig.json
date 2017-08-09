@@ -14,7 +14,8 @@
     ],
     "types" : [
       "core-js",
-      "node"
+      "node",
+      "jasmine"
     ],
     "lib": ["es2017", "dom"]
   },
