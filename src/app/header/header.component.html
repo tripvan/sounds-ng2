@@ -1,7 +1,7 @@
 <ul class="layout-constrained">
     <li class="headeritem headeritem-light">
         <label class="glyphicon glyphicon-search" for="query"></label>
-        <input id="query" [ngModel]="query" (ngModelChange)="searchByTerm($event)" placeholder="Search..."/>
+        <input id="query" [ngModel]="query" data-test="term" (ngModelChange)="searchByTerm($event)" placeholder="Search..."/>
     </li>
     <div class="headeritem-reveal-container">
         <li class="headeritem headeritem-reveal" tabindex="0" [class.headeritem-selected]="showYears" (click)="toggleYears()" (keyup.space)="toggleYears()">Years<i class="glyphicon glyphicon-chevron-down" *ngIf="!showYears"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showYears"></i></li>

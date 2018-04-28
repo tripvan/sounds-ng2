@@ -114,10 +114,11 @@ export class AlbumsComponent implements OnInit, OnDestroy {
                     this.state = 'active';
                     this.isLoading = false;
                     this.query.scrolling = false;
-                    if (albums.length === 0) {
+                    if (albums.length === 0 || !albums.length) {
                         this.noResultsSubscription = this.noResultsTimer.subscribe(() => {
                           this.noResultsState = 'active';
                         });
+                        return null;
                     }
                     this.setTitle();
                     return albums;
