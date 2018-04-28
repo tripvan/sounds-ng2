@@ -27,7 +27,7 @@ export class SpotifyAlbum {
         public popularity: string,
         public trustedUri: SafeUrl) {
             this.popularity = String(this._getPopularity(popularity));
-            this.image = images[images.length - 1];
+            this.image = images && images.length > 0 ? images[images.length - 1] : new SpotifyImage('', '', '');
             this.copyright = copyrights && copyrights.length > 0 ? copyrights[0] : null;
         }
 

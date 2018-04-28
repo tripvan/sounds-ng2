@@ -5,8 +5,8 @@
     
     <div class="headeritem-reveal-container" *ngIf="canSort() && !isLoading">
       <ul>
-        <li class="headeritem headeritem-reveal" (click)="toggleSortOrder()">{{sortOrderText}}</li>
-        <li class="headeritem headeritem-reveal" (click)="toggleSortDirection()">{{sortDirectionText}}</li>
+        <li class="headeritem headeritem-reveal" tabindex="0" (click)="toggleSortOrder()" (keyup.space)="toggleSortOrder()">{{sortOrderText}}</li>
+        <li class="headeritem headeritem-reveal" tabindex="0" (click)="toggleSortDirection()" (keyup.space)="toggleSortDirection()">{{sortDirectionText}}</li>
       </ul>
     </div>
 </div>
