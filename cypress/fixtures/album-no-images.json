@@ -1,0 +1,200 @@
+{"albums":[{
+  "href":"https://api.spotify.com/v1/albums/0foqJYJE9iIf7XU6ytxQVf",
+  "id":"0foqJYJE9iIf7XU6ytxQVf",
+  "images":[
+
+  ],
+  "name":"Fanfarras de Ópio",
+  "type":"album",
+  "uri":"spotify:album:0foqJYJE9iIf7XU6ytxQVf",
+  "artists":[
+     {
+        "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+        "id":"7CSkJyCw32BQkqo9VobmCf",
+        "name":"Fat Freddy",
+        "type":"artist",
+        "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+     }
+  ],
+  "label":"Banzé",
+  "popularity":"1",
+  "releaseDate":"2003-10-27",
+  "tracks":{
+     "items":[
+        {
+           "href":"https://api.spotify.com/v1/tracks/5hHk4BC94GC36WKdvd6Zk9",
+           "id":"5hHk4BC94GC36WKdvd6Zk9",
+           "name":"Frenesim de Canibalismo Ritual",
+           "type":"track",
+           "uri":"spotify:track:5hHk4BC94GC36WKdvd6Zk9",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/6Hub6Rkzo3O6SBJmjA8bWZ",
+           "id":"6Hub6Rkzo3O6SBJmjA8bWZ",
+           "name":"Vamos",
+           "type":"track",
+           "uri":"spotify:track:6Hub6Rkzo3O6SBJmjA8bWZ",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/5R7YsIZ3SE0XfOEq0S4zQg",
+           "id":"5R7YsIZ3SE0XfOEq0S4zQg",
+           "name":"Huxley e Leary",
+           "type":"track",
+           "uri":"spotify:track:5R7YsIZ3SE0XfOEq0S4zQg",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/4oFZjecrbcb42lMJg7WND0",
+           "id":"4oFZjecrbcb42lMJg7WND0",
+           "name":"A Polka Do Amor",
+           "type":"track",
+           "uri":"spotify:track:4oFZjecrbcb42lMJg7WND0",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/6gvOPFyUXkgo8JuKRUSLsa",
+           "id":"6gvOPFyUXkgo8JuKRUSLsa",
+           "name":"Carrossel Magico",
+           "type":"track",
+           "uri":"spotify:track:6gvOPFyUXkgo8JuKRUSLsa",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/6E1ZbtiDKE3s7lAyQi6aoD",
+           "id":"6E1ZbtiDKE3s7lAyQi6aoD",
+           "name":"Dedicado ás Minhas Amigas da fábrica",
+           "type":"track",
+           "uri":"spotify:track:6E1ZbtiDKE3s7lAyQi6aoD",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/32xNgVoPndTWTdjzRBVu2M",
+           "id":"32xNgVoPndTWTdjzRBVu2M",
+           "name":"Batman Theme",
+           "type":"track",
+           "uri":"spotify:track:32xNgVoPndTWTdjzRBVu2M",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              },
+              {
+                 "href":"https://api.spotify.com/v1/artists/3IjVHk8Mo8GBMKyHnwmth8",
+                 "id":"3IjVHk8Mo8GBMKyHnwmth8",
+                 "name":"Neal Hefti",
+                 "type":"artist",
+                 "uri":"spotify:artist:3IjVHk8Mo8GBMKyHnwmth8"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/1O4JkCN7mDxUjPNcVNBQ45",
+           "id":"1O4JkCN7mDxUjPNcVNBQ45",
+           "name":"Danceteria",
+           "type":"track",
+           "uri":"spotify:track:1O4JkCN7mDxUjPNcVNBQ45",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/3pz3j8RwNhU34WxLjfabpR",
+           "id":"3pz3j8RwNhU34WxLjfabpR",
+           "name":"Lolita [ Não quero Saber Teu Nome ]",
+           "type":"track",
+           "uri":"spotify:track:3pz3j8RwNhU34WxLjfabpR",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        },
+        {
+           "href":"https://api.spotify.com/v1/tracks/24ggfOimtVhvqjJRcGHJXV",
+           "id":"24ggfOimtVhvqjJRcGHJXV",
+           "name":"Lsd 25",
+           "type":"track",
+           "uri":"spotify:track:24ggfOimtVhvqjJRcGHJXV",
+           "artists":[
+              {
+                 "href":"https://api.spotify.com/v1/artists/7CSkJyCw32BQkqo9VobmCf",
+                 "id":"7CSkJyCw32BQkqo9VobmCf",
+                 "name":"Fat Freddy",
+                 "type":"artist",
+                 "uri":"spotify:artist:7CSkJyCw32BQkqo9VobmCf"
+              }
+           ]
+        }
+     ],
+     "total":10
+  },
+  "copyrights":[
+     {
+        "text":"2003 Banzé",
+        "type":"C"
+     }
+  ]
+}],"total":33}
