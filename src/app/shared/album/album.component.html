@@ -1,4 +1,4 @@
-<div fxLayout="row" class="listitem row">
+<div data-test="album" fxLayout="row" class="listitem row">
     <div fxFlex="80px" class="listitem-image"><img [src]="album.image.url" /></div>
     <div fxFlex fxLayoutWrap class="truncate">
       <a fxFlex="grow" [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>

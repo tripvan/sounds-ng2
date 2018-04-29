@@ -12,11 +12,9 @@
 </div>
 <tc-loader [isHidden]="!isLoading"></tc-loader>
 <div tcInfiniteScroll class="clear-both" (scroll)="onScroll()" [@albumState]="state">
-    <div data-test="album-results" [hidden]="!(albums | async) || (albums | async).length == 0">
-      <tc-album *ngFor="let album of albums | async" 
-        [@albumState]="album.state" [album]="album">
-      </tc-album>
-    </div>
+    <tc-album *ngFor="let album of albums | async" 
+      [@albumState]="album.state" [album]="album">
+    </tc-album>
     
     <div [@noResultsState]="noResultsState" data-test="no-results">Your search for <span *ngIf="query.query.trim().length > 0">"{{query.query}}"</span> 
         <span *ngIf="query.query.trim().length > 0 && query.label.trim().length > 0"> on the label </span> 
