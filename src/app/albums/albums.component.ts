@@ -174,4 +174,8 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['/search'], { queryParams: { query: this.query.query, label: this.query.label, year: this.query.year, sortOrder: this.sortOrder, sortDirection: this.sortDirection } });
   }
+
+  trackByName(index, album) {
+    return album.name;
+  }
 }
