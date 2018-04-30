@@ -51,9 +51,11 @@ export class SpotifyService {
                   .map(
                     response => {
                       this.spotifyAlbums.total = response.total;
+
                       if (response.total === 0) {
-                          return Observable.of(new Array<SpotifyAlbum>());
+                          return new Array<SpotifyAlbum>();
                       }
+
                       if (response.albums.length > 0) {
                         response.albums.forEach(album => {
                           let tracks: Track[] = [];
@@ -85,7 +87,7 @@ export class SpotifyService {
                         this.spotifyAlbums.total = response.total;
 
                         if (response.total === 0) {
-                            return Observable.of(new Array<SpotifyAlbum>());
+                            return new Array<SpotifyAlbum>();
                         }
 
                         if (response.albums.length > 0) {
@@ -147,7 +149,7 @@ export class SpotifyService {
 
     private _getAlbums(url: string): Observable<SpotifyAlbums> {
       return this.http.get(url)
-                      .map<Response, SpotifyAlbums | {}>(this.extractResponse)
+                      .map<Response, SpotifyAlbums>(this.extractResponse)
                       .catch<any, SpotifyAlbums>(this.handleError);
     }
 
@@ -179,9 +181,9 @@ export class SpotifyService {
       }
     }
 
-    private extractResponse(response: Response): SpotifyAlbums | {} {
+    private extractResponse(response: Response): SpotifyAlbums {
       let body = response.json();
-        return body || {};
+        return body;
     }
 
     private handleError(error: any) {

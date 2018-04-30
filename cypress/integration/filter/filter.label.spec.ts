@@ -1,5 +1,5 @@
 describe('Filter by Label', () => {
-  it.only('loads Ninja Tune label', () => {
+  it('loads Ninja Tune label', () => {
     cy.server();
     cy.route('GET',
     '**/spotify/search*',

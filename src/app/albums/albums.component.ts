@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/timer';
 
 import { SearchQuery } from '../services/model/searchQuery';

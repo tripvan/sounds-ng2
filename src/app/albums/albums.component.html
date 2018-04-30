@@ -10,7 +10,7 @@
       </ul>
     </div>
 </div>
-<tc-loader [isHidden]="!isLoading"></tc-loader>
+<!-- <tc-loader [isHidden]="!isLoading"></tc-loader> -->
 <div tcInfiniteScroll class="clear-both" (scroll)="onScroll()" [@albumState]="state">
     <tc-album *ngFor="let album of albums | async; trackBy: trackByName" 
       [@albumState]="album.state" [album]="album">
