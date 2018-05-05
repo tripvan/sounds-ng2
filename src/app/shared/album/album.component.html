@@ -1,13 +1,13 @@
 <div data-test="album" fxLayout="row" class="listitem row">
-    <div fxFlex="80px" class="listitem-image"><img [src]="album.image.url" /></div>
-    <div fxFlex fxLayoutWrap class="truncate">
-      <a fxFlex="grow" [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
+    <div class="listitem-image"><img [src]="album.image.url" /></div>
+    <div class="truncate">
+      <a [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
       <div class="listitem-small artist" *ngFor="let artist of album.artists; let last=last">
           <a class="truncate" [routerLink]="['/artist']" [queryParams]="{id: artist.id}">{{artist.name}}</a>
           <span class="seperator" *ngIf="!last"> | </span>
           <br *ngIf="last" />
       </div>
-      <div fxFlexFill class="listitem-small">
+      <div class="listitem-small">
         <span class="listitem-smaller popularity">{{album.popularity}}</span> 
         <span class="listitem-smaller">{{album.recordings.length}} track{{album.recordings.length > 1 ? 's' : ''}}</span>
          |

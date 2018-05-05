@@ -5,12 +5,11 @@ import { RouterModule } from '@angular/router';
 import { InfiniteScrollDirective } from './infinite-scroll/infinite-scroll.directive';
 import { AlbumComponent } from './album/album.component';
 import { LoaderComponent } from './loader/loader.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, FlexLayoutModule],
+    imports: [CommonModule, RouterModule],
     declarations: [InfiniteScrollDirective, AlbumComponent, LoaderComponent],
-    exports: [CommonModule, RouterModule, FlexLayoutModule, InfiniteScrollDirective, AlbumComponent, LoaderComponent]
+    exports: [CommonModule, RouterModule, InfiniteScrollDirective, AlbumComponent, LoaderComponent]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

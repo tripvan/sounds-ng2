@@ -1,18 +1,10 @@
-import { Component, Input, OnInit, OnDestroy,
-  trigger,
-  state,
-  style,
-  transition,
-  animate } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { trigger, state, style, transition, animate} from '@angular/animations';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/concatMap';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/observable/timer';
+import { BehaviorSubject, Observable, Subscription, timer } from 'rxjs';
+import { concatMap, filter, map } from 'rxjs/operators';
 
 import { SearchQuery } from '../services/model/searchQuery';
 import { SpotifyAlbum } from '../services/model/spotifyAlbum';
@@ -55,7 +47,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     private sub: any;
     private errorMessage;
     private searchQueryStream: BehaviorSubject<SearchQuery>;
-    private noResultsTimer = Observable.timer(3000);
+    private noResultsTimer = timer(3000);
     private noResultsSubscription: Subscription;
 
     public query: SearchQuery;
@@ -103,28 +95,32 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   _initSearchQueryStream() {
     this.searchQueryStream = new BehaviorSubject<SearchQuery>(this.query);
     this.albums = this.searchQueryStream
-        .filter(search => !!search && (search.query.length > 2 || search.label.length > 2))
-        .concatMap<SearchQuery, SpotifyAlbum[]>((query: SearchQuery) => {
-            if (this.query.scrolling === false) {
-                this.state = 'inactive';
-            }
-            this.isLoading = true;
+      .pipe(
+        filter(search => !!search && (search.query.length > 2 || search.label.length > 2)),
+        concatMap<SearchQuery, SpotifyAlbum[]>((query: SearchQuery) => {
+          if (this.query.scrolling === false) {
+              this.state = 'inactive';
+          }
+          this.isLoading = true;
 
-            return this.spotifyService.getAlbums(query)
-                .map((albums: SpotifyAlbum[]) => {
-                    this.state = 'active';
-                    this.isLoading = false;
-                    this.query.scrolling = false;
-                    if (albums.length === 0 || !albums.length) {
-                        this.noResultsSubscription = this.noResultsTimer.subscribe(() => {
-                          this.noResultsState = 'active';
-                        });
-                        return null;
-                    }
-                    this.setTitle();
-                    return albums;
-                });
-        });
+          return this.spotifyService.getAlbums(query)
+                                    .pipe(
+                                      map((albums: SpotifyAlbum[]) => {
+                                        this.state = 'active';
+                                        this.isLoading = false;
+                                        this.query.scrolling = false;
+                                        if (albums.length === 0 || !albums.length) {
+                                            this.noResultsSubscription = this.noResultsTimer.subscribe(() => {
+                                              this.noResultsState = 'active';
+                                            });
+                                            return null;
+                                        }
+                                        this.setTitle();
+                                        return albums;
+                                      })
+                                    );
+        })
+      );
   }
 
   private setTitle() {

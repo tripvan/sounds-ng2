@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, OnDestroy,
-  trigger,
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { trigger,
   state,
   style,
   transition,
-  animate } from '@angular/core';
+  animate} from '@angular/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 
 import { ArtistSearchQuery } from '../services/model/artistSearchQuery';
 import { SpotifyAlbum } from '../services/model/spotifyAlbum';
@@ -70,24 +70,28 @@ export class ArtistAlbumsComponent implements OnInit, OnDestroy {
             if (!!this.searchQueryStream === false) {
                 this.searchQueryStream = new BehaviorSubject<ArtistSearchQuery>(this.query);
                 this.albums = this.searchQueryStream
-                .concatMap<ArtistSearchQuery, SpotifyAlbum[]>((query: ArtistSearchQuery) => {
-                    if (this.query.scrolling === false) {
-                        this.state = 'inactive';
-                    }
-                    this.isLoading = true;
+                                  .pipe(
+                                    concatMap<ArtistSearchQuery, SpotifyAlbum[]>((query: ArtistSearchQuery) => {
+                                      if (this.query.scrolling === false) {
+                                          this.state = 'inactive';
+                                      }
+                                      this.isLoading = true;
 
-                    return this.spotifyService.getArtistAlbums(query)
-                        .map((albums: SpotifyAlbum[]) => {
-                            this.albumsLoaded = true;
-                            this.isLoading = false;
+                                      return this.spotifyService.getArtistAlbums(query)
+                                                  .pipe(
+                                                    map((albums: SpotifyAlbum[]) => {
+                                                      this.albumsLoaded = true;
+                                                      this.isLoading = false;
 
-                            if (this.canShowAlbums) {
-                                this.showAlbums();
-                            }
-                            this.query.scrolling = false;
-                            return albums;
-                        });
-                });
+                                                      if (this.canShowAlbums) {
+                                                          this.showAlbums();
+                                                      }
+                                                      this.query.scrolling = false;
+                                                      return albums;
+                                                    })
+                                                  );
+                                    })
+                                  );
             } else {
                 this.searchQueryStream.next(this.query);
             }

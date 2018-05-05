@@ -1,15 +1,10 @@
-import { Component, OnInit, ViewChild,
-  trigger,
-  state,
-  style,
-  transition,
-  animate } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/concatMap';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 
 import { SpotifyService } from '../services/spotify.service';
 import { QuantoneService } from '../services/quantone.service';
@@ -75,31 +70,36 @@ export class ArtistComponent implements OnInit {
                 if (!!self.searchQueryStream === false) {
                     self.searchQueryStream = new BehaviorSubject<string>(self.artistId);
                     self.searchQueryStream
-                    .concatMap<string, Artist>((id: string) => {
+                    .pipe(
+                      concatMap<string, Artist>((id: string) => {
                         return self.spotifyService.getArtist(id)
-                                .concatMap(artist => {
-                                      self.artist = artist;
-                                      this.titleService.setTitle(artist.Name);
-                                      this.imageState = 'active';
-                                      this.artistAlbumsComponent.showAlbums();
-                                      return this.quantoneService
-                                            .getArtist(artist.Id)
-                                            .map(quantoneArtist => {
-                                                if (!!quantoneArtist && quantoneArtist.length > 0) {
-                                                    this.hasBio = !!quantoneArtist[0].bio;
-                                                    artist.bio = quantoneArtist[0].bio || `${artist.Name}'s bio is yet to be written.`;
+                                .pipe(
+                                  concatMap(artist => {
+                                    self.artist = artist;
+                                    this.titleService.setTitle(artist.Name);
+                                    this.imageState = 'active';
+                                    this.artistAlbumsComponent.showAlbums();
+                                    return this.quantoneService
+                                          .getArtist(artist.Id)
+                                          .pipe(
+                                            map(quantoneArtist => {
+                                              if (!!quantoneArtist && quantoneArtist.length > 0) {
+                                                  this.hasBio = !!quantoneArtist[0].bio;
+                                                  artist.bio = quantoneArtist[0].bio || `${artist.Name}'s bio is yet to be written.`;
 
-                                                    this.bioState = 'active';
-                                                }
-                                                self.previousArtistId = self.artistId;
-                                                return artist;
-                                            });
-                                });
-                    })
+                                                  this.bioState = 'active';
+                                              }
+                                              self.previousArtistId = self.artistId;
+                                              return artist;
+                                            })
+                                          );
+                                  })
+                                );
+                      })
+                    )
                     .subscribe(artist => {
                       self.artist = artist;
                     });
-
                 } else {
                     self.searchQueryStream.next(self.artistId);
                 }

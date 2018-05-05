@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { Observable, of, throwError } from 'rxjs';
+import { map, catchError  } from 'rxjs/operators';
 
 import { environment } from './../../environments/environment';
 import { Artist } from './model/artist';
@@ -16,10 +12,11 @@ import { SpotifyAlbums } from './model/spotifyAlbums';
 import { Track } from './model/track';
 import { SearchQuery } from './model/searchQuery';
 import { ArtistSearchQuery } from './model/artistSearchQuery';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class SpotifyService {
-    constructor(private http: Http, private sanitiser: DomSanitizer) {}
+    constructor(private http: HttpClient, private sanitiser: DomSanitizer) {}
     private spotifyUrl = `${environment.apiUrl}spotify/`;
     private spotifyAlbums: SpotifyAlbums = new SpotifyAlbums(0, []);
     private query: SearchQuery;
@@ -37,7 +34,7 @@ export class SpotifyService {
 
     getAlbums(query: SearchQuery): Observable<SpotifyAlbum[]> {
       if (this.canSort() && this._areSameQuery(query, this.query)) {
-        return Observable.of(this._sortAlbums(+query.sortOrder, +query.sortDirection));
+        return of(this._sortAlbums(+query.sortOrder, +query.sortDirection));
       }
 
       if (query.offset === 0) {
@@ -48,31 +45,33 @@ export class SpotifyService {
       const url = this._getSearchUrl(query);
 
       return this._getAlbums(url)
-                  .map(
-                    response => {
-                      this.spotifyAlbums.total = response.total;
+                  .pipe(
+                    map(
+                      response => {
+                        this.spotifyAlbums.total = response.total;
 
-                      if (response.total === 0) {
-                          return new Array<SpotifyAlbum>();
-                      }
+                        if (response.total === 0) {
+                            return new Array<SpotifyAlbum>();
+                        }
 
-                      if (response.albums.length > 0) {
-                        response.albums.forEach(album => {
-                          let tracks: Track[] = [];
-                          album.tracks.items.forEach(track => {
-                            tracks.push(new Track(track.id, track.name, this.getUnsanitisedUrl(track.uri), '', '', '', '', ''));
+                        if (response.albums.length > 0) {
+                          response.albums.forEach(album => {
+                            let tracks: Track[] = [];
+                            album.tracks.items.forEach(track => {
+                              tracks.push(new Track(track.id, track.name, this.getUnsanitisedUrl(track.uri), '', '', '', '', ''));
+                            });
+                            this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.releaseDate, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
                           });
-                          this.spotifyAlbums.albums.push(new SpotifyAlbum(album.id, album.name, tracks, album.artists, album.releaseDate, album.images, album.copyrights, album.popularity, this.getUnsanitisedUrl(album.uri)));
-                        });
-                        return this._getSortedAlbums(+query.sortOrder, +query.sortDirection);
+                          return this._getSortedAlbums(+query.sortOrder, +query.sortDirection);
+                        }
                       }
-                    }
+                    )
                   );
     }
 
     getArtistAlbums(query: ArtistSearchQuery): Observable<SpotifyAlbum[]> {
       if (this.canSort() && this._areSameArtistQuery(query, this.artistQuery)) {
-        return Observable.of(this._sortAlbums(+query.sortOrder, +query.sortDirection));
+        return of(this._sortAlbums(+query.sortOrder, +query.sortDirection));
       }
 
       if (query.offset === 0) {
@@ -82,7 +81,8 @@ export class SpotifyService {
       this.artistQuery = query;
       const url = this._getArtistAlbumsUrl(query);
       return this._getAlbums(url)
-                  .map(
+                  .pipe(
+                    map(
                       response => {
                         this.spotifyAlbums.total = response.total;
 
@@ -101,19 +101,24 @@ export class SpotifyService {
                             return this.spotifyAlbums.albums;
                         }
                       }
+                    )
                   );
     }
 
     getArtistAlbumIds(query: ArtistSearchQuery): Observable<SpotifyAlbums> {
         return this.http.get(`${this.spotifyUrl}artistalbums?artistId=${query.id}&offset=${query.offset}&limit=${this.perPage}`)
-                        .map<Response, SpotifyAlbums | {}>(this.extractResponse)
-                        .catch<any, SpotifyAlbums>(this.handleError);
+                        .pipe(
+                          map(this.extractResponse),
+                          catchError<any, SpotifyAlbums>(this.handleError)
+                        );
     }
 
     getArtist(id: string): Observable<Artist> {
         return this.http.get(this.spotifyUrl + 'artist?artistId=' + id)
-            .map<Response, Artist | any>(this.extractArtistData)
-            .catch<any, Artist>(this.handleError);
+            .pipe(
+              map(this.extractArtistData),
+              catchError<any, Artist>(this.handleError)
+            );
     }
 
     private _areSameQuery(current: SearchQuery, previous: SearchQuery) {
@@ -149,8 +154,9 @@ export class SpotifyService {
 
     private _getAlbums(url: string): Observable<SpotifyAlbums> {
       return this.http.get(url)
-                      .map<Response, SpotifyAlbums>(this.extractResponse)
-                      .catch<any, SpotifyAlbums>(this.handleError);
+                      .pipe(
+                        catchError<any, SpotifyAlbums>(this.handleError)
+                      );
     }
 
     private _getSortedAlbums (sortOrder: number, sortDirection: number): SpotifyAlbum[] {
@@ -181,22 +187,16 @@ export class SpotifyService {
       }
     }
 
-    private extractResponse(response: Response): SpotifyAlbums {
-      let body = response.json();
-        return body;
-    }
-
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - $(error.statusText)` : 'Server error';
         console.log(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(errMsg);
     }
 
-    private extractArtistData(response: Response): Artist | any {
-        let artist = response.json();
-        if (!!artist) {
-            let newArtist = new Artist(artist.id, artist.name, '', artist.images);
+    private extractArtistData(response: any): Artist | any {
+        if (!!response) {
+            let newArtist = new Artist(response.id, response.name, '', response.images);
             return newArtist;
         }
 

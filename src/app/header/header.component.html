@@ -8,26 +8,22 @@
         <li class="headeritem headeritem-reveal" tabindex="0" [class.headeritem-selected]="showLabels" (click)="toggleLabels()" (keyup.space)="toggleLabels()">Labels<i class="glyphicon glyphicon-chevron-down" *ngIf="!showLabels"></i><i class="glyphicon glyphicon-chevron-up" *ngIf="showLabels"></i></li>
     </div>
 </ul>
-<perfect-scrollbar *ngIf="showYears" class="header-scrollbar">
-  <ul class="layout-constrained headeritem-margin">
-      <li class="headeritem headeritem-light headeritem-no-margin">
-          <label class="glyphicon glyphicon-search" for="year"></label>
-          <input id="year" [ngModel]="year" (ngModelChange)="searchByYear($event, true)" placeholder="Year..."/>
-      </li>
-      <li class="headeritem headeritem-reveal" tabindex="0" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of years" (click)="searchByYear(yearModel)" (keyup.space)="searchByYear(yearModel)">{{yearModel}}</li>
-  </ul>
-  <ul class="layout-constrained headeritem-margin" *ngIf="showYears">
-      <li class="headeritem headeritem-reveal" tabindex="0" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of yearsRange" (click)="searchByYear(yearModel)" (keyup.space)="searchByYear(yearModel)">{{yearModel}}</li>
-  </ul>
-</perfect-scrollbar>
-
-<perfect-scrollbar *ngIf="showLabels" class="header-scrollbar">
-  <ul class="layout-constrained headeritem-margin">
+<ul *ngIf="showYears" class="layout-constrained headeritem-margin">
     <li class="headeritem headeritem-light headeritem-no-margin">
-        <label class="glyphicon glyphicon-search" for="label"></label>
-        <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event, true)" placeholder="Record Label..."/>
+        <label class="glyphicon glyphicon-search" for="year"></label>
+        <input id="year" [ngModel]="year" (ngModelChange)="searchByYear($event, true)" placeholder="Year..."/>
     </li>
-    <li class="headeritem headeritem-reveal truncate" tabindex="0" [class.headeritem-selected]="labelModel.Name.toString() === label" *ngFor="let labelModel of labels" (click)="searchByLabel(labelModel.Name)" (keyup.space)="searchByLabel(labelModel.Name)">{{labelModel.Name}}</li>
-    <!--<li class="headeritem headeritem-reveal" (click)="showLabels = false" ><a routerLink="/labels">More</a></li>-->
-  </ul>
-</perfect-scrollbar>
+    <li class="headeritem headeritem-reveal" tabindex="0" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of years" (click)="searchByYear(yearModel)" (keyup.space)="searchByYear(yearModel)">{{yearModel}}</li>
+</ul>
+<ul class="layout-constrained headeritem-margin" *ngIf="showYears">
+    <li class="headeritem headeritem-reveal" tabindex="0" [class.headeritem-selected]="yearModel.toString() === year" *ngFor="let yearModel of yearsRange" (click)="searchByYear(yearModel)" (keyup.space)="searchByYear(yearModel)">{{yearModel}}</li>
+</ul>
+
+<ul *ngIf="showLabels" class="layout-constrained headeritem-margin">
+  <li class="headeritem headeritem-light headeritem-no-margin">
+      <label class="glyphicon glyphicon-search" for="label"></label>
+      <input id="label" [ngModel]="label" (ngModelChange)="searchByLabel($event, true)" placeholder="Record Label..."/>
+  </li>
+  <li class="headeritem headeritem-reveal truncate" tabindex="0" [class.headeritem-selected]="labelModel.Name.toString() === label" *ngFor="let labelModel of labels" (click)="searchByLabel(labelModel.Name)" (keyup.space)="searchByLabel(labelModel.Name)">{{labelModel.Name}}</li>
+  <!--<li class="headeritem headeritem-reveal" (click)="showLabels = false" ><a routerLink="/labels">More</a></li>-->
+</ul>

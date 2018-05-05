@@ -1,12 +1,10 @@
+import { Component, Input } from '@angular/core';
 import {
-  Component, Input,
   trigger,
   state,
   style,
   transition,
-  animate
-} from '@angular/core';
-
+  animate } from '@angular/animations';
 import { SpotifyService } from '../../services/spotify.service';
 import { QuantoneService } from '../../services/quantone.service';
 import { SpotifyAlbum } from '../../services/model/spotifyAlbum';

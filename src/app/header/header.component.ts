@@ -1,16 +1,13 @@
-import { Component, OnInit,
-  trigger,
+import { Component, OnInit } from '@angular/core';
+import { trigger,
   state,
   style,
   transition,
-  animate } from '@angular/core';
+  animate } from '@angular/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { SearchQuery } from '../services/model/searchQuery';
 import { YearsService } from '../services/years.service';
@@ -61,8 +58,10 @@ export class HeaderComponent implements OnInit {
   public sortDirection: number = 1;
 
   freeTextSearchQuery: Observable<SearchQuery> = this.freeTextSearchQueryStream
-    .debounceTime(this.debounceTime)
-    .distinctUntilChanged();
+                                                      .pipe(
+                                                        debounceTime(this.debounceTime),
+                                                        distinctUntilChanged()
+                                                      );
   searchQuery: Observable<SearchQuery> = this.searchQueryStream;
 
   ngOnInit() {
