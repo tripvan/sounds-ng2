@@ -108,7 +108,6 @@ export class SpotifyService {
     getArtistAlbumIds(query: ArtistSearchQuery): Observable<SpotifyAlbums> {
         return this.http.get(`${this.spotifyUrl}artistalbums?artistId=${query.id}&offset=${query.offset}&limit=${this.perPage}`)
                         .pipe(
-                          map(this.extractResponse),
                           catchError<any, SpotifyAlbums>(this.handleError)
                         );
     }
