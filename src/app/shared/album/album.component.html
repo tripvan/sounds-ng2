@@ -1,5 +1,5 @@
-<div data-test="album" fxLayout="row" class="listitem row">
-    <div class="listitem-image"><img [src]="album.image.url" /></div>
+<div data-test="album" class="album">
+    <img [src]="album.image.url" />
     <div class="truncate">
       <a [href]="album.trustedUri" class="listitem-large truncate">{{album.name}}</a>
       <div class="listitem-small artist" *ngFor="let artist of album.artists; let last=last">

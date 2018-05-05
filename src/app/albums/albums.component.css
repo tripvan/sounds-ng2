@@ -1,3 +1,7 @@
+tc-album {
+  display: grid;
+  grid-template-rows: 1fr 48px;
+}
 
 .headeritem {
     background-color:  #343535;
