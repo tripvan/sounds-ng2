@@ -44,7 +44,7 @@
     "zone.js": "0.8.10"
   },
   "devDependencies": {
-    "@angular/cli": "1.7.4",
+    "@angular/cli": "20.0.1",
     "@angular/compiler-cli": "5.2.10",
     "@bahmutov/add-typescript-to-cypress": "^2.0.0",
     "@types/core-js": "^0.9.35",
